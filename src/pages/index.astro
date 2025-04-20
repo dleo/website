@@ -22,27 +22,6 @@ const metadata = {
 
 <Layout metadata={metadata}>
     <Fragment slot="announcement"></Fragment>
-    <Fragment slot="header">
-        <Header
-                links={[
-                    {text: 'Home', href: '#'},
-                    {text: 'About', href: '#about'},
-                    {text: 'Resume', href: '#resume'},
-                    {text: 'Porfolio', href: '#porfolio'},
-                    {text: 'Blog', href: '#blog'},
-                    {text: 'Github', href: 'https://github.com/dleo'},
-                ]}
-                actions={[
-                    {
-                        text: 'Hire me',
-                        href: 'https://www.upwork.com/services/product/development-it-david-1882059583201817953?ref=project_share',
-                        target: '_blank',
-                    },
-                ]}
-                isSticky
-                showToggleTheme
-        />
-    </Fragment>
 
     <!-- Hero2 Widget ******************* -->
 
@@ -201,7 +180,7 @@ const metadata = {
     <!-- Content Widget **************** -->
 
     <Content
-            id="porfolio"
+            id="portfolio"
             title="Building custom web apps that solve real business problems"
             subtitle="I help startups and growing companies turn complex challenges into scalable, high-performance software—using Laravel, Vue.js, and React. Explore how I bring clarity, speed, and technical leadership to every project."
             isReversed
@@ -260,7 +239,7 @@ const metadata = {
                 target: '_blank',
                 text: 'Learn more',
                 icon: 'tabler:chevron-right',
-                href: '#', // Replace with actual link when available
+                href: 'https://contaplex.com', // Replace with actual link when available
   }}
     >
         <Fragment slot="content">
@@ -278,6 +257,7 @@ const metadata = {
     <!-- Testimonials Widget *********** -->
 
     <Testimonials
+            id="testimonials"
             title="Client testimonials"
             subtitle="Discover what clients have to say about their experiences working with me."
             testimonials={[
@@ -337,34 +317,5 @@ const metadata = {
             <div class="absolute inset-0 bg-blue-50 dark:bg-transparent"></div>
         </Fragment>
     </BlogLatestPosts>
-    <!-- Footer Widget **************** -->
-    <Contact
-            id="contact"
-            title="Get in touch"
-            subtitle="Have a project in mind? Let's discuss how I can help you achieve your goals."
-            inputs={[
-                {
-                    name: 'name',
-                    type: 'text',
-                    label: 'Name',
-                    placeholder: 'Your Name',
-                    required: true,
-                },
-                {
-                    name: 'email',
-                    type: 'email',
-                    label: 'Email',
-                    placeholder: 'Your Email',
-                    required: true,
-                },
-            ]}
-            textarea={{
-                name: 'message',
-                label: 'Message',
-                placeholder: 'Your Message',
-                required: true,
-            }}
-            disclaimer="By submitting this form, you agree to our privacy policy."
-            description="I respect your privacy and will never share your information with third parties."
-    />
+
 </Layout>

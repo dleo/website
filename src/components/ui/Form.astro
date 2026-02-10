@@ -5,7 +5,8 @@ import Button from '~/components/ui/Button.astro';
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
 ---
 
-<form>
+<form name="contact" method="POST" data-netlify="true">
+  <input type="hidden" name="form-name" value="contact" />
   {
     inputs &&
       inputs.map(
@@ -84,4 +85,56 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
       </div>
     )
   }
+
+  <div id="form-result" class="mt-4 text-center hidden"></div>
 </form>
+
+<script>
+  function setupContactForm() {
+    const form = document.querySelector('form[name="contact"]') as HTMLFormElement | null;
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const disclaimer = form.querySelector<HTMLInputElement>('#disclaimer');
+      if (disclaimer && !disclaimer.checked) {
+        showResult('Please accept the disclaimer before submitting.', false);
+        return;
+      }
+
+      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      if (submitBtn) submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString(),
+        });
+
+        if (response.ok) {
+          showResult('Thank you! Your message has been sent successfully.', true);
+          form.reset();
+        } else {
+          showResult('Something went wrong. Please try again later.', false);
+        }
+      } catch {
+        showResult('Something went wrong. Please try again later.', false);
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+
+    function showResult(message: string, success: boolean) {
+      const el = document.getElementById('form-result');
+      if (!el) return;
+      el.textContent = message;
+      el.className = `mt-4 text-center text-sm font-medium ${success ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`;
+      el.classList.remove('hidden');
+    }
+  }
+
+  setupContactForm();
+  document.addEventListener('astro:after-swap', setupContactForm);
+</script>

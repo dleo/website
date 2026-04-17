@@ -1,6 +1,6 @@
 site:
   name: David Lopez
-  site: 'https://davidlopez.dev'
+  site: 'https://dleolopez.dev'
   base: '/'
   trailingSlash: false
 
@@ -11,7 +11,7 @@ metadata:
   title:
     default: 'David Lopez'
     template: '%s'
-  description: "\U0001F680 Full Stack Web Develolper"
+  description: 'David Lopez — full-stack developer specializing in Laravel, Vue, and AI-integrated systems. Writing on LLM architecture, networking, and shipping maintainable software.'
   robots:
     index: true
     follow: true

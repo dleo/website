@@ -1,0 +1,19 @@
+# David Lopez
+
+> Full-stack developer. Laravel, Vue, and AI-integrated systems. Networking background (Mikrotik, carrier-grade WISP infrastructure).
+
+## About
+
+- [Homepage — hire, bio, portfolio](https://dleolopez.dev/)
+- [Contact](https://dleolopez.dev/contact)
+
+## Blog
+
+- [Shipping Real-World IA: How I Build Maintainable LLM Systems](https://dleolopez.dev/shipping-real-world-ia-how-i-build-maintainable-llm-systems): LLM architecture, RAG patterns, evaluation loops, and shipping maintainable AI systems.
+- [Carrier-Grade Networking Lessons from the Yaesu IMRS Build in Australia](https://dleolopez.dev/ham-radio-meets-carrier-grade-networking-yaesu-imrs-australia): BGP, OSPF, and Mikrotik at scale, applied to ham radio infrastructure.
+
+## Topics
+
+- AI engineering: LLMs, RAG, prompt engineering, evaluation, observability
+- Network architecture: BGP, OSPF, Mikrotik, WISP infrastructure
+- Full-stack: Laravel, Vue.js, React.js, TypeScript, Tailwind CSS

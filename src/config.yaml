@@ -10,7 +10,7 @@ site:
 metadata:
   title:
     default: 'David Lopez'
-    template: '%s'
+    template: '%s — David Lopez'
   description: 'David Lopez — full-stack developer specializing in Laravel, Vue, and AI-integrated systems. Writing on LLM architecture, networking, and shipping maintainable software.'
   robots:
     index: true
@@ -18,9 +18,9 @@ metadata:
   openGraph:
     site_name: 'David Lopez'
     images:
-      - url: '~/assets/images/default.jpg'
+      - url: '~/assets/images/og-default.jpg'
         width: 1200
-        height: 628
+        height: 630
     type: website
   twitter:
     handle: '@dleolopez'

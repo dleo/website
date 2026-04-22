@@ -1,0 +1,92 @@
+---
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '~/assets/styles/terminal.css';
+
+export interface Props {
+  path?: string;
+  center?: string;
+}
+
+const { path = 'david@lopez:~/blog $', center = 'dleolopez.dev — fractional tech lead · product engineer' } =
+  Astro.props;
+---
+
+<div class="tm-root">
+  <div class="tm-titlebar">
+    <div class="tm-tb-left">
+      <span class="tm-dot tm-dot--r"></span>
+      <span class="tm-dot tm-dot--y"></span>
+      <span class="tm-dot tm-dot--g"></span>
+      <span class="tm-tb-path">{path}</span>
+    </div>
+    <div class="tm-tb-center">{center}</div>
+    <div class="tm-tb-right">
+      <span class="tm-status-dot"></span>
+      <span>ONLINE</span>
+    </div>
+  </div>
+
+  <nav class="tm-nav">
+    <div class="tm-nav-inner">
+      <a class="tm-logo" href="/">
+        <span class="tm-prompt">~$</span>
+        <span class="tm-logo-name">david_lopez</span>
+        <span class="tm-caret">_</span>
+      </a>
+      <div class="tm-nav-links">
+        <a href="/#work">cd ./work</a>
+        <a href="/#services">cd ./services</a>
+        <a href="/#process">cd ./process</a>
+        <a href="/blog">cd ./writing</a>
+        <a href="/#about">cd ./about</a>
+        <a class="tm-nav-cta" href="/#about">./book-call.sh</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="tm-blog-main">
+    <slot />
+  </main>
+
+  <footer class="tm-footer">
+    <div class="tm-footer-top">
+      <div>
+        <div class="tm-footer-name">david_lopez</div>
+        <div class="tm-footer-tag">// fractional tech lead · product engineer</div>
+      </div>
+      <div class="tm-footer-cols">
+        <div>
+          <div class="tm-footer-label">./contact</div>
+          <a href="mailto:hello@dleolopez.dev">hello@dleolopez.dev</a>
+          <a href="https://www.linkedin.com/in/dleolopez" target="_blank" rel="noreferrer">
+            linkedin.com/in/dleolopez ↗
+          </a>
+          <a href="https://github.com/dleolopez" target="_blank" rel="noreferrer">
+            github.com/dleolopez ↗
+          </a>
+        </div>
+        <div>
+          <div class="tm-footer-label">./site</div>
+          <a href="/#work">./work</a>
+          <a href="/#services">./services</a>
+          <a href="/blog">./writing</a>
+        </div>
+      </div>
+    </div>
+    <div class="tm-footer-bottom">
+      <span>© 2026 dleolopez.dev</span>
+      <span>built with ♥ in LATAM</span>
+    </div>
+  </footer>
+</div>
+
+<style is:global>
+  html,
+  body {
+    background: #0b0d0e;
+  }
+</style>

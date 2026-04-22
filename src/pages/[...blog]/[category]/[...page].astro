@@ -2,10 +2,9 @@
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 import { blogCategoryRobots, getStaticPathsBlogCategory } from '~/utils/blog';
 
-import Layout from '~/layouts/PageLayout.astro';
-import BlogList from '~/components/blog/List.astro';
-import Headline from '~/components/blog/Headline.astro';
-import Pagination from '~/components/blog/Pagination.astro';
+import V2BlogLayout from '~/layouts/V2BlogLayout.astro';
+import V2BlogList from '~/components/v2/V2BlogList.astro';
+import V2Pagination from '~/components/v2/V2Pagination.astro';
 
 export const prerender = true;
 
@@ -28,10 +27,17 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
-  <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline>{category.title}</Headline>
-    <BlogList posts={page.data} />
-    <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+<V2BlogLayout metadata={metadata} path={`david@lopez:~/blog/#${category.title.toLowerCase()} $`}>
+  <section class="tm-blog-hero">
+    <div class="tm-blog-hero-prompt">$ grep -r "category={category.title}" ~/blog/</div>
+    <h1>#{category.title.toLowerCase()}</h1>
+    <p class="tm-blog-hero-sub">
+      Posts filed under <em>{category.title}</em>.
+    </p>
   </section>
-</Layout>
+
+  <section class="tm-blog-wrap">
+    <V2BlogList posts={page.data} />
+    <V2Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+  </section>
+</V2BlogLayout>

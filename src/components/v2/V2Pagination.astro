@@ -1,0 +1,29 @@
+---
+import { getPermalink } from '~/utils/permalinks';
+
+export interface Props {
+  prevUrl?: string;
+  nextUrl?: string;
+  prevText?: string;
+  nextText?: string;
+}
+
+const { prevUrl, nextUrl, prevText = '← newer posts', nextText = 'older posts →' } = Astro.props;
+---
+
+{
+  (prevUrl || nextUrl) && (
+    <nav class="tm-blog-pagination" aria-label="Pagination">
+      {prevUrl ? (
+        <a href={getPermalink(prevUrl)}>{prevText}</a>
+      ) : (
+        <span class="disabled">{prevText}</span>
+      )}
+      {nextUrl ? (
+        <a href={getPermalink(nextUrl)}>{nextText}</a>
+      ) : (
+        <span class="disabled">{nextText}</span>
+      )}
+    </nav>
+  )
+}

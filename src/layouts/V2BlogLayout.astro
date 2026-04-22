@@ -1,0 +1,18 @@
+---
+import PageLayout from '~/layouts/PageLayout.astro';
+import TerminalChrome from '~/components/v2/TerminalChrome.astro';
+import type { MetaData } from '~/types';
+
+export interface Props {
+  metadata?: MetaData;
+  path?: string;
+}
+
+const { metadata, path } = Astro.props;
+---
+
+<PageLayout metadata={metadata} showHeader={false} showFooter={false}>
+  <TerminalChrome path={path}>
+    <slot />
+  </TerminalChrome>
+</PageLayout>

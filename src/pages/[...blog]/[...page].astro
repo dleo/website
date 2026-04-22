@@ -1,11 +1,9 @@
 ---
 import type { InferGetStaticPropsType, GetStaticPaths } from 'astro';
 
-import Layout from '~/layouts/PageLayout.astro';
-import BlogList from '~/components/blog/List.astro';
-import Headline from '~/components/blog/Headline.astro';
-import Pagination from '~/components/blog/Pagination.astro';
-// import PostTags from "~/components/blog/Tags.astro";
+import V2BlogLayout from '~/layouts/V2BlogLayout.astro';
+import V2BlogList from '~/components/v2/V2BlogList.astro';
+import V2Pagination from '~/components/v2/V2Pagination.astro';
 
 import { blogListRobots, getStaticPathsBlogList } from '~/utils/blog';
 
@@ -20,9 +18,6 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { page } = Astro.props as Props;
 const currentPage = page.currentPage ?? 1;
 
-// const allCategories = await findCategories();
-// const allTags = await findTags();
-
 const metadata = {
   title: `Blog${currentPage > 1 ? ` — Page ${currentPage}` : ''}`,
   robots: {
@@ -35,18 +30,18 @@ const metadata = {
 };
 ---
 
-<Layout metadata={metadata}>
-  <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline
-      subtitle="Some of my thoughts and writings on web development, programming, technology and farming."
-    >
-      The Blog
-    </Headline>
-    <BlogList posts={page.data} />
-    <Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
-    <!--
-      <PostTags tags={allCategories} class="mb-2" title="Search by Categories:" isCategory />
-      <PostTags tags={allTags}  title="Search by Tags:" />
-    -->
+<V2BlogLayout metadata={metadata} path="david@lopez:~/blog $">
+  <section class="tm-blog-hero">
+    <div class="tm-blog-hero-prompt">$ ls -la ~/blog/</div>
+    <h1>writing.</h1>
+    <p class="tm-blog-hero-sub">
+      Notes on engineering, product, and the fractional-CTO life. Thoughts on what actually ships vs.
+      what just sounds good in a kickoff.
+    </p>
   </section>
-</Layout>
+
+  <section class="tm-blog-wrap">
+    <V2BlogList posts={page.data} />
+    <V2Pagination prevUrl={page.url.prev} nextUrl={page.url.next} />
+  </section>
+</V2BlogLayout>

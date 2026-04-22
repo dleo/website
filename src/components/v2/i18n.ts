@@ -4,8 +4,7 @@ import { terminalContent } from "~/data/v2/content";
 
 const STORAGE_KEY = "dl-lang";
 
-const getInitialLang = (): Lang => {
-  if (typeof window === "undefined") return "en";
+const detectLang = (): Lang => {
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "en" || stored === "es") return stored;
@@ -21,11 +20,19 @@ const listeners = new Set<Listener>();
 let current: Lang = "en";
 let initialized = false;
 
-const ensureInit = () => {
+const notify = () => listeners.forEach((fn) => fn());
+
+const initIfNeeded = () => {
   if (initialized || typeof window === "undefined") return;
-  current = getInitialLang();
-  document.documentElement.setAttribute("lang", current);
   initialized = true;
+  const detected = detectLang();
+  if (detected !== current) {
+    current = detected;
+    document.documentElement.setAttribute("lang", current);
+    notify();
+  } else {
+    document.documentElement.setAttribute("lang", current);
+  }
 };
 
 export const setLang = (l: Lang) => {
@@ -37,7 +44,7 @@ export const setLang = (l: Lang) => {
     /* ignore */
   }
   document.documentElement.setAttribute("lang", l);
-  listeners.forEach((fn) => fn());
+  notify();
 };
 
 const subscribe = (fn: Listener) => {
@@ -51,10 +58,9 @@ const getSnapshot = (): Lang => current;
 const getServerSnapshot = (): Lang => "en";
 
 export const useI18n = (): [TerminalContent, Lang, (l: Lang) => void] => {
-  ensureInit();
   const lang = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   useEffect(() => {
-    ensureInit();
+    initIfNeeded();
   }, []);
   return [terminalContent[lang], lang, setLang];
 };

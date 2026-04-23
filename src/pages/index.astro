@@ -25,11 +25,23 @@ const latestPosts: ArticleItem[] = (await findLatestPosts({ count: 4 })).map((po
 <PageLayout metadata={metadata} showHeader={false} showFooter={false}>
   <TerminalSite client:load latestPosts={latestPosts} />
 
-  <!-- Netlify form registration (hidden). Modal JS submits via fetch to '/'. -->
+  <!-- Netlify form registrations (hidden). Modal JS submits via fetch to '/'. -->
   <form name="contact-v2" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
     <input type="text" name="name" />
     <input type="email" name="email" />
     <textarea name="message"></textarea>
+    <input type="text" name="lang" />
+  </form>
+  <form name="apply-v2" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="text" name="companyUrl" />
+    <input type="text" name="role" />
+    <input type="text" name="stage" />
+    <input type="text" name="need" />
+    <textarea name="context"></textarea>
+    <input type="text" name="qualification" />
+    <input type="text" name="reason" />
     <input type="text" name="lang" />
   </form>
 </PageLayout>

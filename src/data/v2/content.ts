@@ -14,7 +14,7 @@ const en: TerminalContent = {
     writing: "writing",
     about: "about",
     contact: "contact",
-    bookCall: "./book-call.sh",
+    bookCall: "./apply.sh",
   },
   navMobile: {
     work: "› work",
@@ -39,7 +39,7 @@ const en: TerminalContent = {
       "architect, ship, and lead — without",
       "the full-time hire.",
     ],
-    ctaPrimary: "$ ./book-call.sh",
+    ctaPrimary: "$ ./apply.sh",
     ctaSecondary: "cat ./case-studies",
     kbdTip: "TIP",
     kbdHint: "press",
@@ -87,11 +87,23 @@ const en: TerminalContent = {
     ctaH1: "Let's make your",
     ctaH2: "next quarter",
     ctaH3: "ship.",
-    ctaPrimary: "./book-call.sh --30min",
-    ctaSecondary: "./send-brief.sh",
+    ctaPrimary: "./apply.sh",
+    ctaSecondary: "./send-question.sh",
   },
 
   services: [
+    {
+      id: "audit",
+      title: "Velocity Audit",
+      subtitle: "Best entry point if you're not sure what you need yet",
+      price: "$1,500 · 5 business days",
+      bullets: [
+        "Codebase health audit",
+        "Top 3 velocity blockers",
+        "90-day shipping plan",
+        "60-min walkthrough",
+      ],
+    },
     {
       id: "fractional",
       title: "Fractional Tech Lead",
@@ -107,7 +119,7 @@ const en: TerminalContent = {
       id: "sprint",
       title: "Product Sprint",
       subtitle: "Ship the thing you've been stuck on",
-      price: "from $12k / 4 wks",
+      price: "$15k / 4 wks",
       bullets: [
         "Scoped engagement, fixed timeline",
         "From prototype to production-ready",
@@ -118,7 +130,7 @@ const en: TerminalContent = {
       id: "rescue",
       title: "System Rescue",
       subtitle: "Stabilize the platform that's breaking",
-      price: "from $6k / 2 wks",
+      price: "$7,500 / 2 wks",
       bullets: [
         "Performance audits, DB tuning",
         "Legacy migration & refactoring",
@@ -137,7 +149,7 @@ const en: TerminalContent = {
     stack: "## stack",
   },
   caseFooterText: "// have a similar problem?",
-  caseFooterCTA: "$ ./book-call.sh",
+  caseFooterCTA: "$ ./apply.sh",
   cases: [
     {
       id: "fintech",
@@ -357,11 +369,11 @@ const en: TerminalContent = {
     embedHeading: "# pick a slot",
   },
   contact: {
-    title: "# send a brief",
-    meta: "// I read every one. Usually reply within 24h.",
+    title: "# ask a question",
+    meta: "// Have a question but not a project yet? Good place to start. Reply within 24h.",
     labelName: "> name *",
     labelEmail: "> email *",
-    labelMsg: "> message *",
+    labelMsg: "> question *",
     send: "./send",
     done: "done",
     errRequired: "required",
@@ -369,10 +381,83 @@ const en: TerminalContent = {
     errMsg: "tell me something",
     gotIt: "got it. reply incoming to {email} within 24h.",
   },
+  apply: {
+    title: "# apply to work with me",
+    filename: "~/apply.sh",
+    meta: "// 60 seconds. I read every application personally. Reply within 24h.",
+    labelName: "> name *",
+    labelEmail: "> work email *",
+    labelCompanyUrl: "> company url *",
+    labelRole: "> your role *",
+    labelStage: "> company stage *",
+    labelNeed: "> what you need *",
+    labelContext: "> brief context * (200 chars min)",
+    contextHint: "// What's the problem, what have you tried, what does success look like?",
+    roleOptions: [
+      { value: "CTO", label: "CTO" },
+      { value: "Founder", label: "Founder" },
+      { value: "VP Eng", label: "VP Engineering" },
+      { value: "Head of Eng", label: "Head of Engineering" },
+      { value: "Other", label: "Other" },
+    ],
+    stageOptions: [
+      { value: "Pre-seed", label: "Pre-seed" },
+      { value: "Seed", label: "Seed" },
+      { value: "Series A", label: "Series A" },
+      { value: "Series B", label: "Series B" },
+      { value: "Bootstrapped profitable", label: "Bootstrapped (profitable)" },
+      { value: "Other", label: "Other" },
+    ],
+    needOptions: [
+      { value: "Velocity Audit", label: "Velocity Audit ($1,500)" },
+      { value: "Fractional Tech Lead", label: "Fractional Tech Lead" },
+      { value: "Product Sprint", label: "Product Sprint" },
+      { value: "System Rescue", label: "System Rescue" },
+      { value: "Not sure", label: "Not sure yet" },
+    ],
+    send: "./apply",
+    done: "done",
+    errRequired: "required",
+    errEmail: "invalid email",
+    errFreeEmail: "please use your work email (not gmail/yahoo/etc)",
+    errUrl: "please enter a valid company url",
+    errContext: "needs at least 200 characters — what's the problem?",
+    confirmQualifiedTitle: "[✓] application received",
+    confirmQualifiedBody:
+      "Thanks — you're a strong fit. I'll send a calendar link and 2 prep questions to {email} within 24h.",
+    confirmBorderlineTitle: "[✓] application received",
+    confirmBorderlineBody:
+      "Thanks — I read every application personally. I'll reply to {email} within 24h.",
+    confirmNotQualifiedTitle: "[!] probably not the right fit",
+    confirmNotQualifiedBody:
+      "Based on what you shared, I'm probably not the best person for this. Two things that might help:",
+    notQualifiedLinkCases: "→ read the case studies",
+    notQualifiedLinkAudit: "→ start with a $1,500 Velocity Audit",
+  },
+  fitCheck: {
+    prompt: "$ cat ./fit-check.txt",
+    forHeading: "# This is for you if:",
+    forItems: [
+      "You're a CTO, founder, or VP Eng at a Seed–Series B SaaS or AI startup",
+      "Your team is 5–25 engineers and you're hitting velocity walls",
+      "You've shipped products and you know good engineering when you see it",
+      "You have budget approved for fractional / contract engineering ($8k+/mo)",
+    ],
+    notHeading: "# This is NOT for you if:",
+    notItems: [
+      "You're pre-seed and looking for an equity-based co-founder",
+      "You need a junior dev or a single-feature builder ($50/hr work)",
+      "You're an agency looking for white-label subcontractors",
+      "You want a quick MVP with no architecture conversation",
+      "You're in web3 / crypto (not my domain)",
+    ],
+    footnote:
+      'If most of "This is for you" matches → apply below.\nIf most of "NOT for you" matches → I\'ll be honest, save us both the time.',
+  },
 
   cmdk: {
     title: "command palette — type 'help'",
-    placeholder: "book, open work, help...",
+    placeholder: "apply, open work, help...",
   },
 
   footer: {
@@ -400,7 +485,7 @@ const es: TerminalContent = {
     writing: "blog",
     about: "sobre-mi",
     contact: "contacto",
-    bookCall: "./agendar-llamada.sh",
+    bookCall: "./postular.sh",
   },
   navMobile: {
     work: "› proyectos",
@@ -425,7 +510,7 @@ const es: TerminalContent = {
       "alguien senior que diseñe, entregue",
       "y lidere — sin contratar tiempo completo.",
     ],
-    ctaPrimary: "$ ./agendar-llamada.sh",
+    ctaPrimary: "$ ./postular.sh",
     ctaSecondary: "cat ./casos-de-estudio",
     kbdTip: "TIP",
     kbdHint: "pulsa",
@@ -473,11 +558,23 @@ const es: TerminalContent = {
     ctaH1: "Hagamos que tu",
     ctaH2: "próximo trimestre",
     ctaH3: "se entregue.",
-    ctaPrimary: "./agendar-llamada.sh --30min",
-    ctaSecondary: "./enviar-brief.sh",
+    ctaPrimary: "./postular.sh",
+    ctaSecondary: "./enviar-pregunta.sh",
   },
 
   services: [
+    {
+      id: "audit",
+      title: "Auditoría de Velocidad",
+      subtitle: "El mejor punto de entrada si aún no sabes qué necesitas",
+      price: "$1,500 · 5 días hábiles",
+      bullets: [
+        "Auditoría de salud del codebase",
+        "Top 3 bloqueadores de velocidad",
+        "Plan de entrega a 90 días",
+        "Walkthrough de 60 min",
+      ],
+    },
     {
       id: "fractional",
       title: "Tech Lead Fraccional",
@@ -493,7 +590,7 @@ const es: TerminalContent = {
       id: "sprint",
       title: "Sprint de Producto",
       subtitle: "Entrega eso que está atascado",
-      price: "desde $12k / 4 sem",
+      price: "$15k / 4 sem",
       bullets: [
         "Alcance y plazo fijos",
         "De prototipo a producción",
@@ -504,7 +601,7 @@ const es: TerminalContent = {
       id: "rescue",
       title: "Rescate de Sistema",
       subtitle: "Estabiliza la plataforma que se está rompiendo",
-      price: "desde $6k / 2 sem",
+      price: "$7,500 / 2 sem",
       bullets: [
         "Auditorías de performance, tuning de DB",
         "Migración y refactor de legacy",
@@ -523,7 +620,7 @@ const es: TerminalContent = {
     stack: "## stack",
   },
   caseFooterText: "// ¿un problema parecido?",
-  caseFooterCTA: "$ ./agendar-llamada.sh",
+  caseFooterCTA: "$ ./postular.sh",
   cases: [
     {
       id: "fintech",
@@ -745,11 +842,11 @@ const es: TerminalContent = {
     embedHeading: "# elige un horario",
   },
   contact: {
-    title: "# enviar un brief",
-    meta: "// leo cada uno. Respondo dentro de 24h.",
+    title: "# hazme una pregunta",
+    meta: "// ¿Una pregunta sin proyecto todavía? Este es el lugar. Respuesta en 24h.",
     labelName: "> nombre *",
     labelEmail: "> email *",
-    labelMsg: "> mensaje *",
+    labelMsg: "> pregunta *",
     send: "./enviar",
     done: "listo",
     errRequired: "requerido",
@@ -757,10 +854,84 @@ const es: TerminalContent = {
     errMsg: "cuéntame algo",
     gotIt: "recibido. respuesta para {email} dentro de 24h.",
   },
+  apply: {
+    title: "# postular para trabajar conmigo",
+    filename: "~/postular.sh",
+    meta: "// 60 segundos. Leo cada postulación personalmente. Respondo en 24h.",
+    labelName: "> nombre *",
+    labelEmail: "> email de trabajo *",
+    labelCompanyUrl: "> url de la empresa *",
+    labelRole: "> tu rol *",
+    labelStage: "> etapa de la empresa *",
+    labelNeed: "> qué necesitas *",
+    labelContext: "> contexto breve * (mín. 200 caracteres)",
+    contextHint:
+      "// ¿Cuál es el problema, qué has intentado, cómo se ve el éxito?",
+    roleOptions: [
+      { value: "CTO", label: "CTO" },
+      { value: "Founder", label: "Founder" },
+      { value: "VP Eng", label: "VP de Ingeniería" },
+      { value: "Head of Eng", label: "Head de Ingeniería" },
+      { value: "Other", label: "Otro" },
+    ],
+    stageOptions: [
+      { value: "Pre-seed", label: "Pre-seed" },
+      { value: "Seed", label: "Seed" },
+      { value: "Series A", label: "Series A" },
+      { value: "Series B", label: "Series B" },
+      { value: "Bootstrapped profitable", label: "Bootstrapped (rentable)" },
+      { value: "Other", label: "Otro" },
+    ],
+    needOptions: [
+      { value: "Velocity Audit", label: "Auditoría de Velocidad ($1,500)" },
+      { value: "Fractional Tech Lead", label: "Tech Lead Fraccional" },
+      { value: "Product Sprint", label: "Sprint de Producto" },
+      { value: "System Rescue", label: "Rescate de Sistema" },
+      { value: "Not sure", label: "No estoy seguro todavía" },
+    ],
+    send: "./postular",
+    done: "listo",
+    errRequired: "requerido",
+    errEmail: "email inválido",
+    errFreeEmail: "usa tu email de trabajo (no gmail/yahoo/etc)",
+    errUrl: "ingresa una url válida",
+    errContext: "mínimo 200 caracteres — ¿cuál es el problema?",
+    confirmQualifiedTitle: "[✓] postulación recibida",
+    confirmQualifiedBody:
+      "Gracias — eres un buen fit. Enviaré link de calendario y 2 preguntas de preparación a {email} en 24h.",
+    confirmBorderlineTitle: "[✓] postulación recibida",
+    confirmBorderlineBody:
+      "Gracias — leo cada postulación personalmente. Responderé a {email} en 24h.",
+    confirmNotQualifiedTitle: "[!] probablemente no soy el fit correcto",
+    confirmNotQualifiedBody:
+      "Por lo que compartiste, probablemente no soy la mejor persona. Dos cosas que pueden ayudar:",
+    notQualifiedLinkCases: "→ lee los casos de estudio",
+    notQualifiedLinkAudit: "→ empieza con una Auditoría de Velocidad ($1,500)",
+  },
+  fitCheck: {
+    prompt: "$ cat ./fit-check.txt",
+    forHeading: "# Esto es para ti si:",
+    forItems: [
+      "Eres CTO, founder o VP de Ingeniería en un SaaS o startup AI en etapa Seed–Series B",
+      "Tu equipo tiene 5–25 ingenieros y están chocando con muros de velocidad",
+      "Has entregado productos y reconoces buena ingeniería cuando la ves",
+      "Tienes presupuesto aprobado para ingeniería fraccional / contratista ($8k+/mes)",
+    ],
+    notHeading: "# Esto NO es para ti si:",
+    notItems: [
+      "Estás en pre-seed buscando un co-founder técnico con equity",
+      "Necesitas un dev junior o alguien para una sola feature ($50/hr)",
+      "Eres una agencia buscando subcontratar white-label",
+      "Quieres un MVP rápido sin conversación de arquitectura",
+      "Estás en web3 / crypto (no es mi dominio)",
+    ],
+    footnote:
+      'Si la mayoría de "Esto es para ti" aplica → postula abajo.\nSi la mayoría de "NO es para ti" aplica → te lo diré con honestidad, ahorrémonos el tiempo.',
+  },
 
   cmdk: {
     title: "paleta de comandos — escribe 'help'",
-    placeholder: "book, open work, help...",
+    placeholder: "apply, open work, help...",
   },
 
   footer: {

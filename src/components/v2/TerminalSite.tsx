@@ -10,7 +10,7 @@ import type { ArticleItem, CaseItem, Lang } from "~/data/v2/types";
 import { useI18n } from "./i18n";
 import { TmFAQ } from "./TmFAQ";
 import { TmCaseModal } from "./TmCaseModal";
-import { TmBookingModal } from "./TmBookingModal";
+import { TmApplyModal } from "./TmApplyModal";
 import { TmContactModal } from "./TmContactModal";
 
 type CmdEntry = { cmd: string; out: string[] };
@@ -23,7 +23,21 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
   const [t, lang, setLang] = useI18n();
   const [navOpen, setNavOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
-  const [bookingOpen, setBookingOpen] = useState(false);
+  const [applyOpen, setApplyOpen] = useState<{
+    open: boolean;
+    prefillNeed?: string;
+  }>({ open: false });
+
+  const openApply = (prefillNeed?: string) =>
+    setApplyOpen({ open: true, prefillNeed });
+  const closeApply = () => setApplyOpen({ open: false });
+
+  const SERVICE_TO_NEED: Record<string, string> = {
+    audit: "Velocity Audit",
+    fractional: "Fractional Tech Lead",
+    sprint: "Product Sprint",
+    rescue: "System Rescue",
+  };
   const [caseOpen, setCaseOpen] = useState<CaseItem | null>(null);
   const [filter, setFilter] = useState("all");
   const [cmdHistory, setCmdHistory] = useState<CmdEntry[]>([]);
@@ -84,7 +98,7 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
     const out: string[] = [];
     if (c === "help") {
       out.push(
-        "available: open <section>, book, contact, lang <en|es>, clear, whoami",
+        "available: open <section>, apply, contact, lang <en|es>, clear, whoami",
         "sections: work, services, process, writing, about",
       );
     } else if (c.startsWith("open ")) {
@@ -93,9 +107,9 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
         scrollTo(tg);
         out.push(`→ scrolled to #${tg}`);
       } else out.push(`error: unknown section '${tg}'`);
-    } else if (c === "book") {
-      setBookingOpen(true);
-      out.push("→ opening booking...");
+    } else if (c === "apply" || c === "book") {
+      openApply();
+      out.push("→ opening apply form...");
       setCmdOpen(false);
     } else if (c === "contact") {
       setContactOpen(true);
@@ -183,7 +197,7 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
             <button onClick={() => setContactOpen(true)}>
               cd ./{t.nav.contact}
             </button>
-            <button className="tm-nav-cta" onClick={() => setBookingOpen(true)}>
+            <button className="tm-nav-cta" onClick={() => openApply()}>
               {t.nav.bookCall}
             </button>
           </div>
@@ -216,7 +230,7 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
             </button>
             <button
               onClick={() => {
-                setBookingOpen(true);
+                openApply();
                 setNavOpen(false);
               }}
               className="tm-nav-cta"
@@ -254,7 +268,7 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
           <div className="tm-hero-actions">
             <button
               className="tm-btn tm-btn--primary"
-              onClick={() => setBookingOpen(true)}
+              onClick={() => openApply()}
             >
               <span>{t.hero.ctaPrimary}</span>
               <span className="tm-btn-arrow">→</span>
@@ -370,7 +384,7 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
               </ul>
               <button
                 className="tm-service-cta"
-                onClick={() => setBookingOpen(true)}
+                onClick={() => openApply(SERVICE_TO_NEED[s.id])}
               >
                 {t.serviceStart} --{s.id} →
               </button>
@@ -539,6 +553,42 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
         </div>
       </section>
 
+      <section className="tm-section tm-fitcheck">
+        <div className="tm-section-head">
+          <div className="tm-section-prompt">{t.fitCheck.prompt}</div>
+        </div>
+        <div className="tm-fitcheck-cols">
+          <div className="tm-fitcheck-col tm-fitcheck-col--for">
+            <h3>{t.fitCheck.forHeading}</h3>
+            <ul>
+              {t.fitCheck.forItems.map((item, i) => (
+                <li key={i}>
+                  <span className="tm-fitcheck-bullet">+</span> {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="tm-fitcheck-col tm-fitcheck-col--not">
+            <h3>{t.fitCheck.notHeading}</h3>
+            <ul>
+              {t.fitCheck.notItems.map((item, i) => (
+                <li key={i}>
+                  <span className="tm-fitcheck-bullet">−</span> {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <p className="tm-fitcheck-note">
+          {t.fitCheck.footnote.split("\n").map((line, i) => (
+            <Fragment key={i}>
+              {i > 0 && <br />}
+              {line}
+            </Fragment>
+          ))}
+        </p>
+      </section>
+
       <section className="tm-cta-big">
         <div className="tm-cta-prompt">{t.sections.ctaPrompt}</div>
         <h2 className="tm-cta-h">
@@ -550,7 +600,7 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
         <div className="tm-cta-actions">
           <button
             className="tm-btn tm-btn--primary tm-btn--lg"
-            onClick={() => setBookingOpen(true)}
+            onClick={() => openApply()}
           >
             {t.sections.ctaPrimary} <span className="tm-btn-arrow">→</span>
           </button>
@@ -585,7 +635,7 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                github.com/dleolopez ↗
+                github.com/dleo ↗
               </a>
                             <a
                 href="https://www.upwork.com/freelancers/davidlopezd"
@@ -666,15 +716,18 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
           onClose={() => setCaseOpen(null)}
           onBook={() => {
             setCaseOpen(null);
-            setBookingOpen(true);
+            openApply();
           }}
         />
       )}
-      {bookingOpen && (
-        <TmBookingModal
+      {applyOpen.open && (
+        <TmApplyModal
           t={t}
           lang={lang}
-          onClose={() => setBookingOpen(false)}
+          prefillNeed={applyOpen.prefillNeed}
+          onClose={closeApply}
+          onScrollToCases={() => scrollTo("work")}
+          onScrollToServices={() => scrollTo("services")}
         />
       )}
       {contactOpen && (

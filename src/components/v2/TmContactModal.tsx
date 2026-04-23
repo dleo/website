@@ -68,7 +68,7 @@ export const TmContactModal = ({ t, lang, onClose }: Props) => {
           />
           <span className="tm-dot tm-dot--y" />
           <span className="tm-dot tm-dot--g" />
-          <span className="tm-modal-filename">~/send-brief.sh</span>
+          <span className="tm-modal-filename">~/send-question.sh</span>
           <button className="tm-modal-close" onClick={onClose}>
             [ esc ]
           </button>

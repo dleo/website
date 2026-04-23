@@ -160,6 +160,47 @@ export interface CmdkLabels {
   placeholder: string;
 }
 
+export interface FitCheckContent {
+  prompt: string;
+  forHeading: string;
+  forItems: string[];
+  notHeading: string;
+  notItems: string[];
+  footnote: string;
+}
+
+export interface ApplyModalLabels {
+  title: string;
+  filename: string;
+  meta: string;
+  labelName: string;
+  labelEmail: string;
+  labelCompanyUrl: string;
+  labelRole: string;
+  labelStage: string;
+  labelNeed: string;
+  labelContext: string;
+  contextHint: string;
+  roleOptions: { value: string; label: string }[];
+  stageOptions: { value: string; label: string }[];
+  needOptions: { value: string; label: string }[];
+  send: string;
+  done: string;
+  errRequired: string;
+  errEmail: string;
+  errFreeEmail: string;
+  errUrl: string;
+  errContext: string;
+  confirmQualifiedTitle: string;
+  confirmQualifiedBody: string;
+  confirmBorderlineTitle: string;
+  confirmBorderlineBody: string;
+  confirmNotQualifiedTitle: string;
+  confirmNotQualifiedBody: string;
+  notQualifiedLinkCases: string;
+  notQualifiedLinkAudit: string;
+}
+
 export interface FooterLabels {
   tag: string;
   contact: string;
@@ -198,6 +239,8 @@ export interface TerminalContent {
   faqs: FaqItem[];
   booking: BookingLabels;
   contact: ContactModalLabels;
+  apply: ApplyModalLabels;
+  fitCheck: FitCheckContent;
   cmdk: CmdkLabels;
   footer: FooterLabels;
 }

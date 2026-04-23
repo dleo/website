@@ -17,9 +17,28 @@ type CmdEntry = { cmd: string; out: string[] };
 
 type Props = {
   latestPosts?: ArticleItem[];
+  deployEpoch?: number;
 };
 
-const TerminalSite = ({ latestPosts }: Props = {}) => {
+const MONTHS_EN = [
+  "jan", "feb", "mar", "apr", "may", "jun",
+  "jul", "aug", "sep", "oct", "nov", "dec",
+];
+const MONTHS_ES = [
+  "ene", "feb", "mar", "abr", "may", "jun",
+  "jul", "ago", "sep", "oct", "nov", "dic",
+];
+
+const pad2 = (n: number) => String(n).padStart(2, "0");
+
+const formatDeploy = (epoch: number | undefined, lang: Lang): string => {
+  if (!epoch) return "";
+  const d = new Date(epoch);
+  const m = (lang === "es" ? MONTHS_ES : MONTHS_EN)[d.getMonth()];
+  return `${d.getDate()} ${m} ${d.getFullYear()} · ${pad2(d.getHours())}:${pad2(d.getMinutes())}:${pad2(d.getSeconds())}`;
+};
+
+const TerminalSite = ({ latestPosts, deployEpoch }: Props = {}) => {
   const [t, lang, setLang] = useI18n();
   const [navOpen, setNavOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
@@ -661,7 +680,9 @@ const TerminalSite = ({ latestPosts }: Props = {}) => {
         </div>
         <div className="tm-footer-bottom">
           <span>{t.footer.copy}</span>
-          <span>{t.footer.deploy}</span>
+          <span>
+            {t.footer.deployLabel} {formatDeploy(deployEpoch, lang)}
+          </span>
           <span>{t.footer.builtIn}</span>
         </div>
       </footer>

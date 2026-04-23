@@ -209,7 +209,7 @@ export interface FooterLabels {
   servicesLink: string;
   writingLink: string;
   copy: string;
-  deploy: string;
+  deployLabel: string;
   builtIn: string;
 }
 

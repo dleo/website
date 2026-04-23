@@ -387,11 +387,11 @@ const en: TerminalContent = {
     meta: "// 60 seconds. I read every application personally. Reply within 24h.",
     labelName: "> name *",
     labelEmail: "> work email *",
-    labelCompanyUrl: "> company url *",
+    labelCompanyUrl: "> company url",
     labelRole: "> your role *",
     labelStage: "> company stage *",
     labelNeed: "> what you need *",
-    labelContext: "> brief context * (200 chars min)",
+    labelContext: "> brief context * (100 chars min)",
     contextHint: "// What's the problem, what have you tried, what does success look like?",
     roleOptions: [
       { value: "CTO", label: "CTO" },
@@ -421,7 +421,7 @@ const en: TerminalContent = {
     errEmail: "invalid email",
     errFreeEmail: "please use your work email (not gmail/yahoo/etc)",
     errUrl: "please enter a valid company url",
-    errContext: "needs at least 200 characters — what's the problem?",
+    errContext: "needs at least 100 characters — what's the problem?",
     confirmQualifiedTitle: "[✓] application received",
     confirmQualifiedBody:
       "Thanks — you're a strong fit. I'll send a calendar link and 2 prep questions to {email} within 24h.",
@@ -468,7 +468,7 @@ const en: TerminalContent = {
     servicesLink: "./services",
     writingLink: "./writing",
     copy: "© 2026 dleolopez.dev",
-    deploy: "last deploy: 17 apr 2026 · 14:22:08",
+    deployLabel: "last deploy:",
     builtIn: "built with ♥ in LATAM",
   },
 };
@@ -860,11 +860,11 @@ const es: TerminalContent = {
     meta: "// 60 segundos. Leo cada postulación personalmente. Respondo en 24h.",
     labelName: "> nombre *",
     labelEmail: "> email de trabajo *",
-    labelCompanyUrl: "> url de la empresa *",
+    labelCompanyUrl: "> url de la empresa",
     labelRole: "> tu rol *",
     labelStage: "> etapa de la empresa *",
     labelNeed: "> qué necesitas *",
-    labelContext: "> contexto breve * (mín. 200 caracteres)",
+    labelContext: "> contexto breve * (mín. 100 caracteres)",
     contextHint:
       "// ¿Cuál es el problema, qué has intentado, cómo se ve el éxito?",
     roleOptions: [
@@ -895,7 +895,7 @@ const es: TerminalContent = {
     errEmail: "email inválido",
     errFreeEmail: "usa tu email de trabajo (no gmail/yahoo/etc)",
     errUrl: "ingresa una url válida",
-    errContext: "mínimo 200 caracteres — ¿cuál es el problema?",
+    errContext: "mínimo 100 caracteres — ¿cuál es el problema?",
     confirmQualifiedTitle: "[✓] postulación recibida",
     confirmQualifiedBody:
       "Gracias — eres un buen fit. Enviaré link de calendario y 2 preguntas de preparación a {email} en 24h.",
@@ -942,7 +942,7 @@ const es: TerminalContent = {
     servicesLink: "./servicios",
     writingLink: "./blog",
     copy: "© 2026 dleolopez.dev",
-    deploy: "último deploy: 17 abr 2026 · 14:22:08",
+    deployLabel: "último deploy:",
     builtIn: "construido con ♥ en LATAM",
   },
 };

@@ -62,7 +62,7 @@ const qualify = (f: FormState): { tier: Tier; reason: string } => {
   const checks = {
     role: QUALIFIED_ROLES.includes(f.role),
     stage: QUALIFIED_STAGES.includes(f.stage),
-    context: f.context.trim().length >= 200,
+    context: f.context.trim().length >= 100,
     email: !isFreeEmail(f.email),
   };
   const passing = Object.values(checks).filter(Boolean).length;
@@ -120,8 +120,8 @@ export const TmApplyModal = ({
     if (!form.email.trim()) e.email = t.apply.errRequired;
     else if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = t.apply.errEmail;
     else if (isFreeEmail(form.email)) e.email = t.apply.errFreeEmail;
-    if (!form.companyUrl.trim()) e.companyUrl = t.apply.errRequired;
-    else if (!looksLikeUrl(form.companyUrl)) e.companyUrl = t.apply.errUrl;
+    if (form.companyUrl.trim() && !looksLikeUrl(form.companyUrl))
+      e.companyUrl = t.apply.errUrl;
     if (!form.role) e.role = t.apply.errRequired;
     if (!form.stage) e.stage = t.apply.errRequired;
     if (!form.need) e.need = t.apply.errRequired;
@@ -277,7 +277,7 @@ export const TmApplyModal = ({
                     onChange={(e) => update("context", e.target.value)}
                   />
                   <span className="tm-apply-hint">
-                    {t.apply.contextHint} ({form.context.trim().length}/200)
+                    {t.apply.contextHint} ({form.context.trim().length}/100)
                   </span>
                   {errors.context && (
                     <span className="tm-err">! {errors.context}</span>

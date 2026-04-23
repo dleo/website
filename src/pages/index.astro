@@ -20,10 +20,12 @@ const latestPosts: ArticleItem[] = (await findLatestPosts({ count: 4 })).map((po
   read: post.readingTime ? `${post.readingTime} min read` : '',
   href: getPermalink(post.permalink, 'post'),
 }));
+
+const deployEpoch = Date.now();
 ---
 
 <PageLayout metadata={metadata} showHeader={false} showFooter={false}>
-  <TerminalSite client:load latestPosts={latestPosts} />
+  <TerminalSite client:load latestPosts={latestPosts} deployEpoch={deployEpoch} />
 
   <!-- Netlify form registrations (hidden). Modal JS submits via fetch to '/'. -->
   <form name="contact-v2" data-netlify="true" data-netlify-honeypot="bot-field" hidden>

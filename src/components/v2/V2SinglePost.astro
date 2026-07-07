@@ -92,7 +92,7 @@ const categoryLink = post.category && APP_BLOG?.category?.isEnabled ? getPermali
   {post.excerpt && <p class="tm-post-excerpt">{post.excerpt}</p>}
 
   {
-    post.image && (
+    post.image && !post.hideHeroImage && (
       <div class="tm-post-image">
         <Image
           src={post.image}

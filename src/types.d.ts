@@ -42,6 +42,9 @@ export interface Post {
 
   /**  */
   readingTime?: number;
+
+  /** Hide the hero image on the post page while keeping it for OG and listings. */
+  hideHeroImage?: boolean;
 }
 
 export interface Taxonomy {

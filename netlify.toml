@@ -3,6 +3,18 @@
   command = "npm run build"
 [build.processing.html]
   pretty_urls = false
+[[redirects]]
+  from = "/shipping-real-world-ia-how-i-build-maintainable-llm-systems"
+  to = "/blog/shipping-real-world-ia-how-i-build-maintainable-llm-systems"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/ham-radio-meets-carrier-grade-networking-yaesu-imrs-australia"
+  to = "/blog/ham-radio-meets-carrier-grade-networking-yaesu-imrs-australia"
+  status = 301
+  force = false
+
 [[headers]]
   for = "/_astro/*"
   [headers.values]

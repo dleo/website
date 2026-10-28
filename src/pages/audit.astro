@@ -1,0 +1,830 @@
+---
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '~/assets/styles/terminal.css';
+
+import PageLayout from '~/layouts/PageLayout.astro';
+import StructuredData from '~/components/common/StructuredData.astro';
+import { AuditForm } from '~/components/v2/AuditForm';
+import {
+  hero,
+  forNotFor,
+  whyStall,
+  deliverables,
+  timeline,
+  proof,
+  priceAfter,
+  about,
+  faq,
+  formCta,
+} from '~/data/v2/audit';
+import { terminalContent } from '~/data/v2/content';
+
+const metadata = {
+  title: 'AI Production Audit for B2B Software Teams — David Lopez',
+  ignoreTitleTemplate: true,
+  description:
+    'A fixed-fee, 10-day audit that gets your AI feature out of pilot and into production. Ship / fix / kill calls, cost model, and a 90-day roadmap.',
+  canonical: 'https://dleolopez.dev/audit',
+  robots: { index: true, follow: true },
+};
+
+// Proof: fintech (production load at scale, $4M/mo) and saas (B2B SaaS, billing layer)
+const proofCases = terminalContent.en.cases.filter(
+  (c) => c.id === 'fintech' || c.id === 'saas',
+);
+
+// Split proof.intro into heading and subtitle at the first sentence boundary
+const proofDotIdx = proof.intro.indexOf('. ');
+const proofHeading =
+  proofDotIdx > -1 ? proof.intro.slice(0, proofDotIdx) : proof.intro;
+const proofSub =
+  proofDotIdx > -1 ? proof.intro.slice(proofDotIdx + 2) : '';
+
+// Parse source URL from whyStall.intro for link rendering
+const sourceMatch = whyStall.intro.match(/\(source: (https?:\/\/[^)]+)\)/);
+const sourceUrl = sourceMatch?.[1] ?? '';
+const [introBefore, introAfter] = sourceUrl
+  ? whyStall.intro.split(`(source: ${sourceUrl})`)
+  : [whyStall.intro, ''];
+
+const siteUrl = 'https://dleolopez.dev';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'AI Production Audit',
+  url: `${siteUrl}/audit`,
+  provider: {
+    '@type': 'Person',
+    '@id': `${siteUrl}/#person`,
+    name: 'David Lopez',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '1500',
+    priceCurrency: 'USD',
+  },
+  areaServed: 'Worldwide',
+  description: metadata.description,
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.items.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'AI Production Audit',
+      item: `${siteUrl}/audit`,
+    },
+  ],
+};
+---
+
+<PageLayout metadata={metadata} showHeader={false} showFooter={false}>
+  <StructuredData schema={serviceSchema} />
+  <StructuredData schema={faqSchema} />
+  <StructuredData schema={breadcrumbSchema} />
+
+  <div class="tm-root tm-audit">
+    <!-- 1. Hero -->
+    <section class="audit-hero">
+      <div class="audit-hero-inner">
+        <p class="audit-eyebrow">{hero.eyebrow}</p>
+        <h1 class="audit-h1">{hero.h1}</h1>
+        <p class="audit-subtitle">{hero.subtitle}</p>
+        <p class="audit-meta-line">{hero.metaLine}</p>
+        <div class="audit-hero-actions">
+          <a
+            href="#apply"
+            class="tm-btn tm-btn--primary tm-btn--lg audit-cta-btn"
+            data-cta-position="hero"
+          >
+            {hero.ctaPrimary}
+          </a>
+          <a href="#deliverables" class="tm-btn tm-btn--ghost tm-btn--lg">
+            {hero.ctaSecondaryLabel}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. For / not for -->
+    <section class="tm-section--alt">
+      <div class="tm-section">
+        <div class="tm-section-head">
+          <p class="tm-section-prompt">$ cat ./fit-check.txt</p>
+          <h2 class="tm-h2">{forNotFor.title}</h2>
+        </div>
+        <div class="tm-fitcheck-cols">
+          <div class="tm-fitcheck-col tm-fitcheck-col--for">
+            <h3># This is for you if:</h3>
+            <ul>
+              {
+                forNotFor.forYouIf.map((item) => (
+                  <li>
+                    <span class="tm-fitcheck-bullet">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div class="tm-fitcheck-col tm-fitcheck-col--not">
+            <h3># This is not for you if:</h3>
+            <ul>
+              {
+                forNotFor.notForYouIf.map((item) => (
+                  <li>
+                    <span class="tm-fitcheck-bullet">✗</span>
+                    <span>{item}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Why AI pilots stall -->
+    <section class="tm-section">
+      <div class="tm-section-head">
+        <p class="tm-section-prompt">$ grep -r "reason" ./pilot-failure.log</p>
+        <h2 class="tm-h2">{whyStall.title}</h2>
+        <p class="tm-section-sub">
+          {introBefore}
+          {
+            sourceUrl && (
+              <a
+                href={sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="audit-source-link"
+              >
+                [source]
+              </a>
+            )
+          }
+          {introAfter}
+        </p>
+      </div>
+      <ol class="audit-reasons">
+        {
+          whyStall.reasons.map((reason, i) => (
+            <li class="audit-reason">
+              <span class="audit-reason-n">
+                0{i + 1}
+              </span>
+              <div>
+                <strong>{reason.title}</strong> {reason.description}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- 4. What you get -->
+    <section class="tm-section--accent" id="deliverables">
+      <div class="tm-section">
+        <div class="tm-section-head">
+          <p class="tm-section-prompt">$ ls -la ./report/</p>
+          <h2 class="tm-h2">{deliverables.title}</h2>
+        </div>
+        <ul class="audit-files">
+          {
+            deliverables.items.map((item) => (
+              <li class="audit-file">
+                <span class="audit-file-name">{item.file}</span>
+                <span class="audit-file-sep"> — </span>
+                <span class="audit-file-desc">{item.description}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="audit-deliverables-note">
+          <em>{deliverables.intro}</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- 5. How it works -->
+    <section class="tm-section">
+      <div class="tm-section-head">
+        <p class="tm-section-prompt">$ ./timeline.sh</p>
+        <h2 class="tm-h2">{timeline.title}</h2>
+      </div>
+      <div class="audit-timeline">
+        {
+          timeline.rows.map((row) => (
+            <div class="audit-timeline-row">
+              <div class="audit-timeline-day">
+                <span class="tm-ok">Day {row.day}</span>
+              </div>
+              <div class="audit-timeline-what">{row.what}</div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 6. Proof -->
+    <section class="tm-section--alt">
+      <div class="tm-section">
+        <div class="tm-section-head">
+          <p class="tm-section-prompt">$ ls -la ./case-studies/</p>
+          <h2 class="tm-h2">{proofHeading}</h2>
+          <p class="tm-section-sub">{proofSub}</p>
+        </div>
+        {import.meta.env.DEV && <div class="audit-dev-note">{proof.note}</div>}
+        <div class="tm-cases">
+          {
+            proofCases.map((c, i) => (
+              <article class="tm-case">
+                <div class="tm-case-head">
+                  <span class="tm-dot tm-dot--r" />
+                  <span class="tm-dot tm-dot--y" />
+                  <span class="tm-dot tm-dot--g" />
+                  <span class="tm-case-filename">
+                    ~/case-studies/{c.id}.md
+                  </span>
+                </div>
+                <div class="tm-case-body">
+                  <div class="tm-case-meta">
+                    <span># {String(i + 1).padStart(2, '0')}</span>
+                    <span>{c.industry}</span>
+                    <span>{c.year}</span>
+                  </div>
+                  <div class="tm-case-title">{c.client}</div>
+                  <div class="tm-case-role">
+                    role: <em>{c.role}</em>
+                  </div>
+                  <div class="tm-case-metrics">
+                    {c.metrics.map((m) => (
+                      <div class="tm-case-metric">
+                        <div class="tm-case-metric-k">› {m.k}</div>
+                        <div class="tm-case-metric-v">{m.v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Price + what happens after -->
+    <section class="tm-section" id="price">
+      <div class="tm-section-head">
+        <p class="tm-section-prompt">$ cat ./pricing.json</p>
+        <h2 class="tm-h2">{priceAfter.title}</h2>
+        <p class="tm-section-sub">{priceAfter.main}</p>
+      </div>
+      <div class="audit-price-cta">
+        <a
+          href="#apply"
+          class="tm-btn tm-btn--primary tm-btn--lg audit-cta-btn"
+          data-cta-position="price"
+        >
+          {hero.ctaPrimary}
+        </a>
+      </div>
+      <div class="audit-ladder">
+        {
+          priceAfter.ladder.map((step, i) => (
+            <div class="audit-ladder-step">
+              <span class="audit-ladder-n">0{i + 1}</span>
+              <div>
+                <strong>{step.title}</strong>
+                <span class="audit-ladder-desc"> — {step.description}</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 8. About David -->
+    <section class="tm-section--accent">
+      <div class="tm-section">
+        <div class="tm-section-head">
+          <p class="tm-section-prompt">$ whoami --long</p>
+          <h2 class="tm-h2">{about.title}</h2>
+        </div>
+        <p class="audit-about-text">{about.text}</p>
+      </div>
+    </section>
+
+    <!-- 9. FAQ -->
+    <section class="tm-section">
+      <div class="tm-section-head">
+        <p class="tm-section-prompt">$ man david-lopez</p>
+        <h2 class="tm-h2">{faq.title}</h2>
+      </div>
+      <div class="tm-faqs">
+        {
+          faq.items.map((item, i) => (
+            <details class="tm-faq">
+              <summary class="tm-faq-q">
+                <span class="tm-faq-n">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="tm-faq-qt">{item.question}</span>
+                <span class="tm-faq-icon">+</span>
+              </summary>
+              <div class="tm-faq-a">{item.answer}</div>
+            </details>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- 10. Application form -->
+    <section class="tm-section" id="apply">
+      <div class="tm-section-head">
+        <p class="tm-section-prompt">$ ./apply.sh</p>
+        <h2 class="tm-h2">{formCta.h2}</h2>
+        <p class="tm-section-sub">
+          <a
+            href="#apply"
+            class="tm-btn tm-btn--primary tm-btn--lg audit-cta-btn audit-final-cta"
+            data-cta-position="final"
+          >
+            {hero.ctaPrimary}
+          </a>
+        </p>
+        <p class="audit-form-line">{formCta.line}</p>
+      </div>
+      <AuditForm client:visible />
+    </section>
+
+    <!-- Minimal footer -->
+    <footer class="audit-footer">
+      <div class="audit-footer-inner">
+        <span class="audit-footer-copy">© 2026 dleolopez.dev</span>
+        <nav class="audit-footer-links" aria-label="Legal">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- 11. Sticky mobile CTA bar -->
+    <div class="audit-sticky-bar" aria-hidden="true">
+      <a
+        href="#apply"
+        class="audit-sticky-link"
+        data-cta-position="sticky"
+        aria-label="Apply for an audit — $1,500"
+      >
+        Apply — $1,500 →
+      </a>
+    </div>
+  </div>
+
+  <!-- Hidden Netlify form registration for audit-v1 -->
+  <form
+    name="audit-v1"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+    hidden
+  >
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="text" name="companyUrl" />
+    <input type="text" name="role" />
+    <input type="text" name="companyType" />
+    <input type="text" name="arr" />
+    <input type="text" name="aiStatus" />
+    <input type="text" name="timeline" />
+    <textarea name="context"></textarea>
+    <input type="text" name="bot-field" />
+    <input type="text" name="qualification" />
+    <input type="text" name="reason" />
+    <input type="text" name="utm_source" />
+    <input type="text" name="utm_medium" />
+    <input type="text" name="utm_campaign" />
+    <input type="text" name="utm_content" />
+  </form>
+
+  <!-- CTA click tracking (works with ClientRouter via astro:page-load) -->
+  <script is:inline>
+    (function () {
+      function handleCtaClick(e) {
+        const el = e.target && e.target.closest && e.target.closest('[data-cta-position]');
+        if (el && typeof window.gtag === 'function') {
+          window.gtag('event', 'audit_cta_click', {
+            position: el.getAttribute('data-cta-position'),
+          });
+        }
+      }
+      function initCtaTracking() {
+        document.removeEventListener('click', handleCtaClick);
+        document.addEventListener('click', handleCtaClick);
+      }
+      document.addEventListener('astro:page-load', initCtaTracking);
+    })();
+  </script>
+</PageLayout>
+
+<style is:global>
+  html,
+  body {
+    background: #0b0d0e;
+  }
+</style>
+
+<style>
+  /* ── Chartreuse accent scoped to this page ── */
+  .tm-audit {
+    --audit-cta: #d7ff3f;
+  }
+
+  .audit-cta-btn,
+  .tm-audit .tm-btn--primary {
+    background: var(--audit-cta) !important;
+    color: var(--tm-bg) !important;
+    border-color: var(--audit-cta) !important;
+  }
+
+  .audit-cta-btn:hover,
+  .tm-audit .tm-btn--primary:hover {
+    background: var(--tm-text) !important;
+    color: var(--tm-bg) !important;
+    border-color: var(--tm-text) !important;
+  }
+
+  /* ── Hero ── */
+  .audit-hero {
+    position: relative;
+    padding: 80px 32px 64px;
+    background: var(--tm-bg);
+    border-bottom: 1px solid var(--tm-line);
+  }
+
+  .audit-hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .audit-eyebrow {
+    font-family: var(--tm-mono);
+    font-size: 11px;
+    color: var(--audit-cta);
+    letter-spacing: 0.08em;
+    margin: 0 0 24px;
+  }
+
+  .audit-h1 {
+    font-family: var(--tm-display);
+    font-size: clamp(32px, 5.5vw, 64px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--tm-text);
+    margin: 0 0 24px;
+  }
+
+  .audit-subtitle {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--tm-mute);
+    max-width: 720px;
+    margin: 0 0 20px;
+  }
+
+  .audit-meta-line {
+    font-family: var(--tm-mono);
+    font-size: 13px;
+    color: var(--audit-cta);
+    margin: 0 0 32px;
+    padding: 8px 14px;
+    border: 1px solid color-mix(in srgb, var(--audit-cta) 30%, transparent);
+    display: inline-block;
+  }
+
+  .audit-hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Why stall ── */
+  .audit-reasons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 800px;
+    border-top: 1px solid var(--tm-line);
+  }
+
+  .audit-reason {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--tm-line);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .audit-reason-n {
+    font-family: var(--tm-mono);
+    font-size: 12px;
+    color: var(--audit-cta);
+    font-weight: 700;
+    flex-shrink: 0;
+    min-width: 24px;
+    padding-top: 2px;
+  }
+
+  .audit-source-link {
+    color: var(--audit-cta);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ── Deliverables ── */
+  .audit-files {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--tm-line);
+    max-width: 860px;
+  }
+
+  .audit-file {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--tm-line);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .audit-file-name {
+    font-family: var(--tm-mono);
+    font-size: 13px;
+    color: var(--audit-cta);
+    flex-shrink: 0;
+  }
+
+  .audit-file-sep {
+    color: var(--tm-mute);
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .audit-file-desc {
+    color: var(--tm-text);
+  }
+
+  .audit-deliverables-note {
+    font-size: 14px;
+    color: var(--tm-mute);
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* ── Timeline ── */
+  .audit-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 800px;
+    border-top: 1px solid var(--tm-line);
+  }
+
+  .audit-timeline-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--tm-line);
+    font-size: 15px;
+    line-height: 1.5;
+    align-items: baseline;
+  }
+
+  .audit-timeline-day {
+    font-family: var(--tm-mono);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .audit-timeline-what {
+    color: var(--tm-text);
+  }
+
+  /* ── Price ── */
+  .audit-price-cta {
+    margin: 0 0 40px;
+  }
+
+  .audit-ladder {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 640px;
+    border-top: 1px solid var(--tm-line);
+  }
+
+  .audit-ladder-step {
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--tm-line);
+    font-size: 15px;
+  }
+
+  .audit-ladder-n {
+    font-family: var(--tm-mono);
+    font-size: 11px;
+    color: var(--audit-cta);
+    font-weight: 700;
+    flex-shrink: 0;
+    min-width: 20px;
+  }
+
+  .audit-ladder-desc {
+    color: var(--tm-mute);
+  }
+
+  /* ── About ── */
+  .audit-about-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--tm-text);
+    max-width: 720px;
+    margin: 0;
+  }
+
+  /* ── Form section ── */
+  .audit-form-line {
+    font-size: 14px;
+    color: var(--tm-mute);
+    margin: 12px 0 0;
+  }
+
+  .audit-final-cta {
+    text-decoration: none;
+  }
+
+  /* ── Dev note ── */
+  .audit-dev-note {
+    background: rgba(255, 179, 71, 0.08);
+    border: 1px solid var(--tm-amber);
+    color: var(--tm-amber);
+    font-family: var(--tm-mono);
+    font-size: 12px;
+    padding: 12px 16px;
+    margin-bottom: 32px;
+    max-width: 860px;
+  }
+
+  /* ── Footer ── */
+  .audit-footer {
+    background: var(--tm-bg-alt);
+    border-top: 1px solid var(--tm-line);
+    padding: 24px 32px;
+  }
+
+  .audit-footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--tm-mute);
+    flex-wrap: wrap;
+  }
+
+  .audit-footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .audit-footer-links a {
+    color: var(--tm-mute);
+    text-decoration: none;
+    font-family: var(--tm-mono);
+    font-size: 12px;
+  }
+
+  .audit-footer-links a:hover {
+    color: var(--tm-text);
+  }
+
+  .audit-footer-copy {
+    font-family: var(--tm-mono);
+  }
+
+  /* ── Sticky mobile CTA bar ── */
+  .audit-sticky-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: var(--tm-bg-alt);
+    border-top: 1px solid var(--tm-line);
+    padding: 10px 16px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .audit-sticky-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+    background: var(--audit-cta);
+    color: var(--tm-bg);
+    font-family: var(--tm-mono);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .audit-sticky-bar {
+      display: block;
+    }
+
+    /* Push last section above sticky bar */
+    #apply {
+      padding-bottom: calc(96px + 80px);
+    }
+
+    .audit-hero {
+      padding: 40px 16px 32px;
+    }
+
+    .audit-h1 {
+      font-size: 30px;
+    }
+
+    .audit-subtitle {
+      font-size: 14px;
+    }
+
+    .audit-meta-line {
+      font-size: 12px;
+    }
+
+    .audit-hero-actions {
+      flex-direction: column;
+    }
+
+    .audit-hero-actions .tm-btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .audit-timeline-row {
+      grid-template-columns: 80px 1fr;
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .audit-h1 {
+      font-size: 26px;
+    }
+  }
+</style>

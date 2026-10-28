@@ -46,7 +46,7 @@ const en: TerminalContent = {
   },
 
   stats: [
-    { value: "15+", label: "Years shipping" },
+    { value: "17", label: "Years shipping" },
     { value: "40+", label: "Products delivered" },
     { value: "$28M", label: "Revenue unlocked for clients" },
     { value: "1,000+", label: "Systems deployed" },
@@ -548,7 +548,7 @@ const es: TerminalContent = {
   },
 
   stats: [
-    { value: "15+", label: "Años entregando" },
+    { value: "17", label: "Años entregando" },
     { value: "40+", label: "Productos lanzados" },
     { value: "$28M", label: "Ingresos desbloqueados a clientes" },
     { value: "1,000+", label: "Sistemas desplegados" },

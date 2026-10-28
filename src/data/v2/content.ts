@@ -392,7 +392,8 @@ const en: TerminalContent = {
     labelStage: "> company stage *",
     labelNeed: "> what you need *",
     labelContext: "> brief context * (100 chars min)",
-    contextHint: "// What's the problem, what have you tried, what does success look like?",
+    contextHint:
+      "// What's the problem, what have you tried, what does success look like?",
     roleOptions: [
       { value: "CTO", label: "CTO" },
       { value: "Founder", label: "Founder" },

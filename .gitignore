@@ -45,3 +45,5 @@ docs/*
 
 # astro
 .astro/
+# Planning specs (local only)
+.specs/

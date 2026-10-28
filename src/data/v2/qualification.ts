@@ -83,26 +83,28 @@ export type QualifyInput = {
   context: string;
 };
 
-const QUALIFIED_ROLES: string[] = [
+const QUALIFIED_ROLES: readonly Role[] = [
   "CTO",
   "VP Engineering",
   "Head of Engineering",
   "Founder / CEO",
 ];
 
-const QUALIFIED_ARR_VALUES: string[] = ["$1M–$5M", "$5M–$30M", "$30M+"];
+const QUALIFIED_ARR_VALUES: readonly Arr[] = ["$1M–$5M", "$5M–$30M", "$30M+"];
+
+const QUALIFIED_COMPANY_TYPE: CompanyType = "B2B software vendor";
 
 export const qualify = (
   input: QualifyInput,
 ): { tier: Tier; reason: string } => {
   const arrPasses =
-    QUALIFIED_ARR_VALUES.includes(input.arr) ||
+    (QUALIFIED_ARR_VALUES as readonly string[]).includes(input.arr) ||
     (input.arr === "Prefer not to say" &&
-      input.companyType === "B2B software vendor");
+      input.companyType === QUALIFIED_COMPANY_TYPE);
 
   const checks = {
-    role: QUALIFIED_ROLES.includes(input.role),
-    companyType: input.companyType === "B2B software vendor",
+    role: (QUALIFIED_ROLES as readonly string[]).includes(input.role),
+    companyType: input.companyType === QUALIFIED_COMPANY_TYPE,
     arr: arrPasses,
     aiStatus: input.aiStatus !== "Not sure",
     timeline: input.timeline !== "Just exploring",

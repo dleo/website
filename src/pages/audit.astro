@@ -32,9 +32,9 @@ const metadata = {
   robots: { index: true, follow: true },
 };
 
-// Proof: fintech (production load at scale, $4M/mo) and saas (B2B SaaS, billing layer)
+// Proof: fintech (production load at scale, $4M/mo) and whmcs (hosting, billing reconciliation)
 const proofCases = terminalContent.en.cases.filter(
-  (c) => c.id === 'fintech' || c.id === 'saas',
+  (c) => c.id === 'fintech' || c.id === 'whmcs',
 );
 
 // Split proof.intro into heading and subtitle at the first sentence boundary

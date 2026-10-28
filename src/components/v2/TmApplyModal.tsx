@@ -46,7 +46,12 @@ const QUALIFIED_STAGES = [
 
 const emailDomain = (email: string): string => {
   const at = email.lastIndexOf("@");
-  return at === -1 ? "" : email.slice(at + 1).toLowerCase().trim();
+  return at === -1
+    ? ""
+    : email
+        .slice(at + 1)
+        .toLowerCase()
+        .trim();
 };
 
 const isFreeEmail = (email: string): boolean =>

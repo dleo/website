@@ -72,7 +72,7 @@ const TerminalSite = ({ latestPosts, deployEpoch }: Props = {}) => {
   const closeApply = () => setApplyOpen({ open: false });
 
   const SERVICE_TO_NEED: Record<string, string> = {
-    audit: "Velocity Audit",
+    audit: "AI Production Audit",
     fractional: "Fractional Tech Lead",
     sprint: "Product Sprint",
     rescue: "System Rescue",

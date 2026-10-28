@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Lang, TerminalContent } from "~/data/v2/types";
+import { isFreeEmail, looksLikeUrl, qualify } from "~/data/v2/qualification";
+import type { Tier } from "~/data/v2/qualification";
 import { submitNetlifyForm } from "./netlify";
 
 type Props = {
@@ -16,72 +18,12 @@ type FormState = {
   email: string;
   companyUrl: string;
   role: string;
-  stage: string;
+  companyType: string;
+  arr: string;
+  aiStatus: string;
+  timeline: string;
   need: string;
   context: string;
-};
-
-type Tier = "qualified" | "borderline" | "not_qualified";
-
-const FREE_EMAIL_DOMAINS = [
-  "gmail.com",
-  "yahoo.com",
-  "hotmail.com",
-  "outlook.com",
-  "icloud.com",
-  "protonmail.com",
-  "aol.com",
-  "live.com",
-  "yandex.com",
-  "gmx.com",
-];
-
-const QUALIFIED_ROLES = ["CTO", "Founder", "VP Eng", "Head of Eng"];
-const QUALIFIED_STAGES = [
-  "Seed",
-  "Series A",
-  "Series B",
-  "Bootstrapped profitable",
-];
-
-const emailDomain = (email: string): string => {
-  const at = email.lastIndexOf("@");
-  return at === -1
-    ? ""
-    : email
-        .slice(at + 1)
-        .toLowerCase()
-        .trim();
-};
-
-const isFreeEmail = (email: string): boolean =>
-  FREE_EMAIL_DOMAINS.includes(emailDomain(email));
-
-const looksLikeUrl = (s: string): boolean => {
-  const v = s.trim();
-  if (!v) return false;
-  return /\.[a-z]{2,}/i.test(v);
-};
-
-const qualify = (f: FormState): { tier: Tier; reason: string } => {
-  const checks = {
-    role: QUALIFIED_ROLES.includes(f.role),
-    stage: QUALIFIED_STAGES.includes(f.stage),
-    context: f.context.trim().length >= 100,
-    email: !isFreeEmail(f.email),
-  };
-  const passing = Object.values(checks).filter(Boolean).length;
-  const fails: string[] = [];
-  if (!checks.role) fails.push(`role:${f.role || "none"}`);
-  if (!checks.stage) fails.push(`stage:${f.stage || "none"}`);
-  if (!checks.context) fails.push(`context:${f.context.trim().length}chars`);
-  if (!checks.email) fails.push(`domain:${emailDomain(f.email) || "none"}`);
-  const reason = fails.length ? fails.join(", ") : "all checks passed";
-  let tier: Tier;
-  if (passing === 4) tier = "qualified";
-  else if (passing >= 2) tier = "borderline";
-  else tier = "not_qualified";
-  return { tier, reason };
 };
 
 export const TmApplyModal = ({
@@ -97,7 +39,10 @@ export const TmApplyModal = ({
     email: "",
     companyUrl: "",
     role: "",
-    stage: "",
+    companyType: "",
+    arr: "",
+    aiStatus: "",
+    timeline: "",
     need: prefillNeed ?? "",
     context: "",
   });
@@ -128,17 +73,27 @@ export const TmApplyModal = ({
     if (form.companyUrl.trim() && !looksLikeUrl(form.companyUrl))
       e.companyUrl = t.apply.errUrl;
     if (!form.role) e.role = t.apply.errRequired;
-    if (!form.stage) e.stage = t.apply.errRequired;
+    if (!form.companyType) e.companyType = t.apply.errRequired;
+    if (!form.arr) e.arr = t.apply.errRequired;
+    if (!form.aiStatus) e.aiStatus = t.apply.errRequired;
+    if (!form.timeline) e.timeline = t.apply.errRequired;
     if (!form.need) e.need = t.apply.errRequired;
     if (!form.context.trim()) e.context = t.apply.errRequired;
-    else if (form.context.trim().length < 200) e.context = t.apply.errContext;
+    else if (form.context.trim().length < 150) e.context = t.apply.errContext;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
   const submit = async () => {
     if (!validate()) return;
-    const { tier, reason } = qualify(form);
+    const { tier, reason } = qualify({
+      role: form.role,
+      companyType: form.companyType,
+      arr: form.arr,
+      aiStatus: form.aiStatus,
+      timeline: form.timeline,
+      context: form.context,
+    });
     setSubmitting(true);
     try {
       await submitNetlifyForm("apply-v2", {
@@ -146,7 +101,10 @@ export const TmApplyModal = ({
         email: form.email,
         companyUrl: form.companyUrl,
         role: form.role,
-        stage: form.stage,
+        companyType: form.companyType,
+        arr: form.arr,
+        aiStatus: form.aiStatus,
+        timeline: form.timeline,
         need: form.need,
         context: form.context,
         qualification: tier,
@@ -240,20 +198,69 @@ export const TmApplyModal = ({
                   )}
                 </label>
                 <label>
-                  <span>{t.apply.labelStage}</span>
+                  <span>{t.apply.labelCompanyType}</span>
                   <select
-                    value={form.stage}
-                    onChange={(e) => update("stage", e.target.value)}
+                    value={form.companyType}
+                    onChange={(e) => update("companyType", e.target.value)}
                   >
                     <option value="">—</option>
-                    {t.apply.stageOptions.map((o) => (
+                    {t.apply.companyTypeOptions.map((o) => (
                       <option key={o.value} value={o.value}>
                         {o.label}
                       </option>
                     ))}
                   </select>
-                  {errors.stage && (
-                    <span className="tm-err">! {errors.stage}</span>
+                  {errors.companyType && (
+                    <span className="tm-err">! {errors.companyType}</span>
+                  )}
+                </label>
+                <label>
+                  <span>{t.apply.labelArr}</span>
+                  <select
+                    value={form.arr}
+                    onChange={(e) => update("arr", e.target.value)}
+                  >
+                    <option value="">—</option>
+                    {t.apply.arrOptions.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.arr && <span className="tm-err">! {errors.arr}</span>}
+                </label>
+                <label>
+                  <span>{t.apply.labelAiStatus}</span>
+                  <select
+                    value={form.aiStatus}
+                    onChange={(e) => update("aiStatus", e.target.value)}
+                  >
+                    <option value="">—</option>
+                    {t.apply.aiStatusOptions.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.aiStatus && (
+                    <span className="tm-err">! {errors.aiStatus}</span>
+                  )}
+                </label>
+                <label>
+                  <span>{t.apply.labelTimeline}</span>
+                  <select
+                    value={form.timeline}
+                    onChange={(e) => update("timeline", e.target.value)}
+                  >
+                    <option value="">—</option>
+                    {t.apply.timelineOptions.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.timeline && (
+                    <span className="tm-err">! {errors.timeline}</span>
                   )}
                 </label>
                 <fieldset className="tm-apply-radios">
@@ -282,7 +289,7 @@ export const TmApplyModal = ({
                     onChange={(e) => update("context", e.target.value)}
                   />
                   <span className="tm-apply-hint">
-                    {t.apply.contextHint} ({form.context.trim().length}/100)
+                    {t.apply.contextHint} ({form.context.trim().length}/150)
                   </span>
                   {errors.context && (
                     <span className="tm-err">! {errors.context}</span>

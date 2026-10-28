@@ -427,6 +427,11 @@ const TerminalSite = ({ latestPosts, deployEpoch }: Props = {}) => {
               >
                 {t.serviceStart} --{s.id} →
               </button>
+              {s.link && (
+                <a href={s.link} className="tm-service-link">
+                  cat ./{s.id}.md →
+                </a>
+              )}
             </div>
           ))}
         </div>

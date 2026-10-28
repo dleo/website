@@ -390,7 +390,6 @@ const en: TerminalContent = {
     labelEmail: "> work email *",
     labelCompanyUrl: "> company url",
     labelRole: "> your role *",
-    labelStage: "> company stage *",
     labelCompanyType: "> company type *",
     labelArr: "> annual revenue *",
     labelAiStatus: "> AI status *",
@@ -405,14 +404,6 @@ const en: TerminalContent = {
       { value: "Head of Engineering", label: "Head of Engineering" },
       { value: "Founder / CEO", label: "Founder / CEO" },
       { value: "Product leader", label: "Product leader" },
-      { value: "Other", label: "Other" },
-    ],
-    stageOptions: [
-      { value: "Pre-seed", label: "Pre-seed" },
-      { value: "Seed", label: "Seed" },
-      { value: "Series A", label: "Series A" },
-      { value: "Series B", label: "Series B" },
-      { value: "Bootstrapped profitable", label: "Bootstrapped (profitable)" },
       { value: "Other", label: "Other" },
     ],
     companyTypeOptions: [
@@ -461,7 +452,7 @@ const en: TerminalContent = {
     errEmail: "invalid email",
     errFreeEmail: "please use your work email (not gmail/yahoo/etc)",
     errUrl: "please enter a valid company url",
-    errContext: "needs at least 100 characters — what's the problem?",
+    errContext: "needs at least 150 characters — what's the problem?",
     confirmQualifiedTitle: "[✓] application received",
     confirmQualifiedBody:
       "Thanks — you're a strong fit. I'll send a calendar link and 2 prep questions to {email} within 24h.",
@@ -903,7 +894,6 @@ const es: TerminalContent = {
     labelEmail: "> email de trabajo *",
     labelCompanyUrl: "> url de la empresa",
     labelRole: "> tu rol *",
-    labelStage: "> etapa de la empresa *",
     labelCompanyType: "> tipo de empresa *",
     labelArr: "> ingresos anuales *",
     labelAiStatus: "> estado IA *",
@@ -918,14 +908,6 @@ const es: TerminalContent = {
       { value: "Head of Engineering", label: "Head de Ingeniería" },
       { value: "Founder / CEO", label: "Founder / CEO" },
       { value: "Product leader", label: "Líder de Producto" },
-      { value: "Other", label: "Otro" },
-    ],
-    stageOptions: [
-      { value: "Pre-seed", label: "Pre-seed" },
-      { value: "Seed", label: "Seed" },
-      { value: "Series A", label: "Series A" },
-      { value: "Series B", label: "Series B" },
-      { value: "Bootstrapped profitable", label: "Bootstrapped (rentable)" },
       { value: "Other", label: "Otro" },
     ],
     companyTypeOptions: [
@@ -980,7 +962,7 @@ const es: TerminalContent = {
     errEmail: "email inválido",
     errFreeEmail: "usa tu email de trabajo (no gmail/yahoo/etc)",
     errUrl: "ingresa una url válida",
-    errContext: "mínimo 100 caracteres — ¿cuál es el problema?",
+    errContext: "mínimo 150 caracteres — ¿cuál es el problema?",
     confirmQualifiedTitle: "[✓] postulación recibida",
     confirmQualifiedBody:
       "Gracias — eres un buen fit. Enviaré link de calendario y 2 preguntas de preparación a {email} en 24h.",

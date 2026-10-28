@@ -178,8 +178,6 @@ export interface ApplyModalLabels {
   labelEmail: string;
   labelCompanyUrl: string;
   labelRole: string;
-  /** @deprecated TODO(task-4): remove once TmApplyModal migrates to new fields */
-  labelStage: string;
   labelCompanyType: string;
   labelArr: string;
   labelAiStatus: string;
@@ -188,8 +186,6 @@ export interface ApplyModalLabels {
   labelContext: string;
   contextHint: string;
   roleOptions: { value: string; label: string }[];
-  /** @deprecated TODO(task-4): remove once TmApplyModal migrates to new fields */
-  stageOptions: { value: string; label: string }[];
   companyTypeOptions: { value: string; label: string }[];
   arrOptions: { value: string; label: string }[];
   aiStatusOptions: { value: string; label: string }[];

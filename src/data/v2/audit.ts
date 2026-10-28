@@ -34,8 +34,15 @@ export const forNotFor = {
 // Why AI pilots stall section
 export const whyStall = {
   title: "Why AI pilots stall",
-  intro:
-    "Most AI pilots never reach production — MIT's 2025 study put it at roughly 95% with no measurable P&L impact (source: https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/). In established products it's rarely the model. It's one of these:",
+  intro: {
+    before:
+      "Most AI pilots never reach production — MIT's 2025 study put it at roughly 95% with no measurable P&L impact (",
+    sourceLabel: "source",
+    sourceUrl:
+      "https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/",
+    after:
+      "). In established products it's rarely the model. It's one of these:",
+  },
   reasons: [
     {
       title: "The demo used clean data.",
@@ -144,8 +151,8 @@ export const timeline = {
 // Proof section (6.6)
 export const proof = {
   title: "Proof",
-  intro:
-    "Production systems I've shipped. These aren't AI projects — those case studies are coming.",
+  heading: "Production systems I've shipped",
+  intro: "These aren't AI projects — those case studies are coming.",
   note: "TODO(proof): one AI-specific case study, industry-neutral, no client name unless approved. Do not write one — no voice-agent or placeholder case. Until David supplies a real one, show the two published non-AI cases under this heading.",
 };
 

@@ -37,20 +37,6 @@ const proofCases = terminalContent.en.cases.filter(
   (c) => c.id === 'fintech' || c.id === 'whmcs',
 );
 
-// Split proof.intro into heading and subtitle at the first sentence boundary
-const proofDotIdx = proof.intro.indexOf('. ');
-const proofHeading =
-  proofDotIdx > -1 ? proof.intro.slice(0, proofDotIdx) : proof.intro;
-const proofSub =
-  proofDotIdx > -1 ? proof.intro.slice(proofDotIdx + 2) : '';
-
-// Parse source URL from whyStall.intro for link rendering
-const sourceMatch = whyStall.intro.match(/\(source: (https?:\/\/[^)]+)\)/);
-const sourceUrl = sourceMatch?.[1] ?? '';
-const [introBefore, introAfter] = sourceUrl
-  ? whyStall.intro.split(`(source: ${sourceUrl})`)
-  : [whyStall.intro, ''];
-
 const siteUrl = 'https://dleolopez.dev';
 
 const serviceSchema = {
@@ -172,20 +158,16 @@ const breadcrumbSchema = {
         <p class="tm-section-prompt">$ grep -r "reason" ./pilot-failure.log</p>
         <h2 class="tm-h2">{whyStall.title}</h2>
         <p class="tm-section-sub">
-          {introBefore}
-          {
-            sourceUrl && (
-              <a
-                href={sourceUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="audit-source-link"
-              >
-                [source]
-              </a>
-            )
-          }
-          {introAfter}
+          {whyStall.intro.before}
+          <a
+            href={whyStall.intro.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="audit-source-link"
+          >
+            {whyStall.intro.sourceLabel}
+          </a>
+          {whyStall.intro.after}
         </p>
       </div>
       <ol class="audit-reasons">
@@ -253,8 +235,8 @@ const breadcrumbSchema = {
       <div class="tm-section">
         <div class="tm-section-head">
           <p class="tm-section-prompt">$ ls -la ./case-studies/</p>
-          <h2 class="tm-h2">{proofHeading}</h2>
-          <p class="tm-section-sub">{proofSub}</p>
+          <h2 class="tm-h2">{proof.heading}</h2>
+          <p class="tm-section-sub">{proof.intro}</p>
         </div>
         {import.meta.env.DEV && <div class="audit-dev-note">{proof.note}</div>}
         <div class="tm-cases">
@@ -392,7 +374,7 @@ const breadcrumbSchema = {
     </footer>
 
     <!-- 11. Sticky mobile CTA bar -->
-    <div class="audit-sticky-bar" aria-hidden="true">
+    <div class="audit-sticky-bar">
       <a
         href="#apply"
         class="audit-sticky-link"
@@ -462,18 +444,18 @@ const breadcrumbSchema = {
     --audit-cta: #d7ff3f;
   }
 
-  .audit-cta-btn,
-  .tm-audit .tm-btn--primary {
-    background: var(--audit-cta) !important;
-    color: var(--tm-bg) !important;
-    border-color: var(--audit-cta) !important;
+  .tm-root.tm-audit .tm-btn--primary,
+  .tm-root.tm-audit .audit-cta-btn {
+    background: var(--audit-cta);
+    color: var(--tm-bg);
+    border-color: var(--audit-cta);
   }
 
-  .audit-cta-btn:hover,
-  .tm-audit .tm-btn--primary:hover {
-    background: var(--tm-text) !important;
-    color: var(--tm-bg) !important;
-    border-color: var(--tm-text) !important;
+  .tm-root.tm-audit .tm-btn--primary:hover,
+  .tm-root.tm-audit .audit-cta-btn:hover {
+    background: var(--tm-text);
+    color: var(--tm-bg);
+    border-color: var(--tm-text);
   }
 
   /* ── Hero ── */

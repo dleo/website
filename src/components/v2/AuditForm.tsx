@@ -97,22 +97,22 @@ export const AuditForm = () => {
 
   const validate = (): boolean => {
     const e: FormErrors = {};
-    if (!form.name.trim()) e.name = formFields.name.error!;
-    if (!form.email.trim()) e.email = formFields.email.error!;
+    if (!form.name.trim()) e.name = formFields.name.error;
+    if (!form.email.trim()) e.email = formFields.email.error;
     else if (!/^\S+@\S+\.\S+$/.test(form.email))
-      e.email = formFields.email.error!;
-    else if (isFreeEmail(form.email)) e.email = formFields.email.error!;
-    if (!form.companyUrl.trim()) e.companyUrl = formFields.companyUrl.error!;
+      e.email = formFields.email.error;
+    else if (isFreeEmail(form.email)) e.email = formFields.email.error;
+    if (!form.companyUrl.trim()) e.companyUrl = formFields.companyUrl.error;
     else if (!looksLikeUrl(form.companyUrl))
-      e.companyUrl = formFields.companyUrl.error!;
-    if (!form.role) e.role = formFields.role.error!;
-    if (!form.companyType) e.companyType = formFields.companyType.error!;
-    if (!form.arr) e.arr = formFields.arr.error!;
-    if (!form.aiStatus) e.aiStatus = formFields.aiStatus.error!;
-    if (!form.timeline) e.timeline = formFields.timeline.error!;
-    if (!form.context.trim()) e.context = formFields.context.error!;
+      e.companyUrl = formFields.companyUrl.error;
+    if (!form.role) e.role = formFields.role.error;
+    if (!form.companyType) e.companyType = formFields.companyType.error;
+    if (!form.arr) e.arr = formFields.arr.error;
+    if (!form.aiStatus) e.aiStatus = formFields.aiStatus.error;
+    if (!form.timeline) e.timeline = formFields.timeline.error;
+    if (!form.context.trim()) e.context = formFields.context.error;
     else if (form.context.trim().length < 150)
-      e.context = formFields.context.error!;
+      e.context = formFields.context.error;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -169,7 +169,9 @@ export const AuditForm = () => {
     return (
       <div className="tm-bm-confirm">
         <div className="tm-bm-check">[✓]</div>
-        <h3 className="tm-tcm-title">{formRouting.borderline.heading}</h3>
+        <h3 className="tm-tcm-title">
+          {formRouting.borderline.heading.replace("{email}", form.email)}
+        </h3>
         <p>{formRouting.borderline.message}</p>
       </div>
     );
@@ -201,6 +203,7 @@ export const AuditForm = () => {
         style={{ position: "absolute", left: "-9999px" }}
         tabIndex={-1}
         aria-hidden={true}
+        autoComplete="off"
       />
       <label>
         <span>{formFields.name.label}</span>

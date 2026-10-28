@@ -229,7 +229,7 @@ export interface FormFieldConfig {
   required: boolean;
   label: string;
   hint?: string;
-  error?: string;
+  error: string;
   options?: readonly string[];
 }
 
@@ -308,7 +308,7 @@ export const formRouting = {
     message: "",
   },
   borderline: {
-    heading: "Thanks — I'll review and reply within 24h.",
+    heading: "Thanks — I'll review and reply to {email} within 24h.",
     message:
       "I read every application personally and will follow up with you at the email address you provided.",
   },

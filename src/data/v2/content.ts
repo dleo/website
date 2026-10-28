@@ -46,7 +46,7 @@ const en: TerminalContent = {
   },
 
   stats: [
-    { value: "15+", label: "Years shipping" },
+    { value: "17", label: "Years shipping" },
     { value: "40+", label: "Products delivered" },
     { value: "$28M", label: "Revenue unlocked for clients" },
     { value: "1,000+", label: "Systems deployed" },
@@ -94,15 +94,16 @@ const en: TerminalContent = {
   services: [
     {
       id: "audit",
-      title: "Velocity Audit",
-      subtitle: "Best entry point if you're not sure what you need yet",
-      price: "$1,500 · 5 business days",
+      title: "AI Production Audit",
+      subtitle: "Get your AI feature out of pilot and into production",
+      price: "$1,500 · 10 business days",
       bullets: [
-        "Codebase health audit",
-        "Top 3 velocity blockers",
-        "90-day shipping plan",
-        "60-min walkthrough",
+        "AI initiative inventory — ship / fix / kill call on every use case",
+        "Integration & data review — auth, tenancy, data access, cost model",
+        "Risk register — PII, prompt injection, vendor lock-in, failure modes",
+        "90-day production roadmap — ROI-ranked, sized in engineer-weeks",
       ],
+      link: "/audit",
     },
     {
       id: "fractional",
@@ -389,27 +390,57 @@ const en: TerminalContent = {
     labelEmail: "> work email *",
     labelCompanyUrl: "> company url",
     labelRole: "> your role *",
-    labelStage: "> company stage *",
+    labelCompanyType: "> company type *",
+    labelArr: "> annual revenue *",
+    labelAiStatus: "> AI status *",
+    labelTimeline: "> timeline *",
     labelNeed: "> what you need *",
-    labelContext: "> brief context * (100 chars min)",
-    contextHint: "// What's the problem, what have you tried, what does success look like?",
+    labelContext: "> brief context * (150 chars min)",
+    contextHint:
+      "// What's the problem, what have you tried, what does success look like?",
     roleOptions: [
       { value: "CTO", label: "CTO" },
-      { value: "Founder", label: "Founder" },
-      { value: "VP Eng", label: "VP Engineering" },
-      { value: "Head of Eng", label: "Head of Engineering" },
+      { value: "VP Engineering", label: "VP Engineering" },
+      { value: "Head of Engineering", label: "Head of Engineering" },
+      { value: "Founder / CEO", label: "Founder / CEO" },
+      { value: "Product leader", label: "Product leader" },
       { value: "Other", label: "Other" },
     ],
-    stageOptions: [
-      { value: "Pre-seed", label: "Pre-seed" },
-      { value: "Seed", label: "Seed" },
-      { value: "Series A", label: "Series A" },
-      { value: "Series B", label: "Series B" },
-      { value: "Bootstrapped profitable", label: "Bootstrapped (profitable)" },
+    companyTypeOptions: [
+      { value: "B2B software vendor", label: "B2B software vendor" },
+      { value: "Internal tools / IT team", label: "Internal tools / IT team" },
+      { value: "Agency / consultancy", label: "Agency / consultancy" },
       { value: "Other", label: "Other" },
+    ],
+    arrOptions: [
+      { value: "Under $1M", label: "Under $1M" },
+      { value: "$1M–$5M", label: "$1M–$5M" },
+      { value: "$5M–$30M", label: "$5M–$30M" },
+      { value: "$30M+", label: "$30M+" },
+      { value: "Prefer not to say", label: "Prefer not to say" },
+    ],
+    aiStatusOptions: [
+      {
+        value: "Customers asking, nothing built",
+        label: "Customers asking, nothing built",
+      },
+      {
+        value: "Prototype or pilot exists",
+        label: "Prototype or pilot exists",
+      },
+      {
+        value: "AI feature live with problems",
+        label: "AI feature live with problems",
+      },
+      { value: "Not sure", label: "Not sure" },
+    ],
+    timelineOptions: [
+      { value: "This month", label: "This month" },
+      { value: "This quarter", label: "This quarter" },
+      { value: "Just exploring", label: "Just exploring" },
     ],
     needOptions: [
-      { value: "Velocity Audit", label: "Velocity Audit ($1,500)" },
+      { value: "AI Production Audit", label: "AI Production Audit ($1,500)" },
       { value: "Fractional Tech Lead", label: "Fractional Tech Lead" },
       { value: "Product Sprint", label: "Product Sprint" },
       { value: "System Rescue", label: "System Rescue" },
@@ -421,7 +452,7 @@ const en: TerminalContent = {
     errEmail: "invalid email",
     errFreeEmail: "please use your work email (not gmail/yahoo/etc)",
     errUrl: "please enter a valid company url",
-    errContext: "needs at least 100 characters — what's the problem?",
+    errContext: "needs at least 150 characters — what's the problem?",
     confirmQualifiedTitle: "[✓] application received",
     confirmQualifiedBody:
       "Thanks — you're a strong fit. I'll send a calendar link and 2 prep questions to {email} within 24h.",
@@ -432,13 +463,13 @@ const en: TerminalContent = {
     confirmNotQualifiedBody:
       "Based on what you shared, I'm probably not the best person for this. Two things that might help:",
     notQualifiedLinkCases: "→ read the case studies",
-    notQualifiedLinkAudit: "→ start with a $1,500 Velocity Audit",
+    notQualifiedLinkAudit: "→ see the $1,500 AI Production Audit",
   },
   fitCheck: {
     prompt: "$ cat ./fit-check.txt",
     forHeading: "# This is for you if:",
     forItems: [
-      "You're a CTO, founder, or VP Eng at a Seed–Series B SaaS or AI startup",
+      "You're a CTO, founder, or VP Eng at an established B2B software company",
       "Your team is 5–25 engineers and you're hitting velocity walls",
       "You've shipped products and you know good engineering when you see it",
       "You have budget approved for fractional / contract engineering ($8k+/mo)",
@@ -517,7 +548,7 @@ const es: TerminalContent = {
   },
 
   stats: [
-    { value: "15+", label: "Años entregando" },
+    { value: "17", label: "Años entregando" },
     { value: "40+", label: "Productos lanzados" },
     { value: "$28M", label: "Ingresos desbloqueados a clientes" },
     { value: "1,000+", label: "Sistemas desplegados" },
@@ -565,15 +596,16 @@ const es: TerminalContent = {
   services: [
     {
       id: "audit",
-      title: "Auditoría de Velocidad",
-      subtitle: "El mejor punto de entrada si aún no sabes qué necesitas",
-      price: "$1,500 · 5 días hábiles",
+      title: "Auditoría de IA en Producción",
+      subtitle: "Saca tu feature de IA del piloto y llévala a producción",
+      price: "$1,500 · 10 días hábiles",
       bullets: [
-        "Auditoría de salud del codebase",
-        "Top 3 bloqueadores de velocidad",
-        "Plan de entrega a 90 días",
-        "Walkthrough de 60 min",
+        "Inventario de iniciativas IA — decisión entregar / arreglar / eliminar",
+        "Revisión de integración y datos — auth, tenancy, acceso, modelo de costos",
+        "Registro de riesgos — PII, prompt injection, dependencia de vendors, fallas",
+        "Roadmap de producción a 90 días — priorizado por ROI, en semanas-ingeniero",
       ],
+      link: "/audit",
     },
     {
       id: "fractional",
@@ -862,28 +894,63 @@ const es: TerminalContent = {
     labelEmail: "> email de trabajo *",
     labelCompanyUrl: "> url de la empresa",
     labelRole: "> tu rol *",
-    labelStage: "> etapa de la empresa *",
+    labelCompanyType: "> tipo de empresa *",
+    labelArr: "> ingresos anuales *",
+    labelAiStatus: "> estado IA *",
+    labelTimeline: "> plazo *",
     labelNeed: "> qué necesitas *",
-    labelContext: "> contexto breve * (mín. 100 caracteres)",
+    labelContext: "> contexto breve * (mín. 150 caracteres)",
     contextHint:
       "// ¿Cuál es el problema, qué has intentado, cómo se ve el éxito?",
     roleOptions: [
       { value: "CTO", label: "CTO" },
-      { value: "Founder", label: "Founder" },
-      { value: "VP Eng", label: "VP de Ingeniería" },
-      { value: "Head of Eng", label: "Head de Ingeniería" },
+      { value: "VP Engineering", label: "VP de Ingeniería" },
+      { value: "Head of Engineering", label: "Head de Ingeniería" },
+      { value: "Founder / CEO", label: "Founder / CEO" },
+      { value: "Product leader", label: "Líder de Producto" },
       { value: "Other", label: "Otro" },
     ],
-    stageOptions: [
-      { value: "Pre-seed", label: "Pre-seed" },
-      { value: "Seed", label: "Seed" },
-      { value: "Series A", label: "Series A" },
-      { value: "Series B", label: "Series B" },
-      { value: "Bootstrapped profitable", label: "Bootstrapped (rentable)" },
+    companyTypeOptions: [
+      { value: "B2B software vendor", label: "Proveedor de software B2B" },
+      {
+        value: "Internal tools / IT team",
+        label: "Herramientas internas / equipo IT",
+      },
+      { value: "Agency / consultancy", label: "Agencia / consultoría" },
       { value: "Other", label: "Otro" },
+    ],
+    arrOptions: [
+      { value: "Under $1M", label: "Menos de $1M" },
+      { value: "$1M–$5M", label: "$1M–$5M" },
+      { value: "$5M–$30M", label: "$5M–$30M" },
+      { value: "$30M+", label: "$30M+" },
+      { value: "Prefer not to say", label: "Prefiero no decirlo" },
+    ],
+    aiStatusOptions: [
+      {
+        value: "Customers asking, nothing built",
+        label: "Clientes piden, nada construido",
+      },
+      {
+        value: "Prototype or pilot exists",
+        label: "Prototipo o piloto existe",
+      },
+      {
+        value: "AI feature live with problems",
+        label: "Feature de IA en producción con problemas",
+      },
+      { value: "Not sure", label: "No estoy seguro" },
+    ],
+    timelineOptions: [
+      { value: "This month", label: "Este mes" },
+      { value: "This quarter", label: "Este trimestre" },
+      { value: "Just exploring", label: "Solo explorando" },
     ],
     needOptions: [
-      { value: "Velocity Audit", label: "Auditoría de Velocidad ($1,500)" },
+      {
+        value: "AI Production Audit",
+        label: "Auditoría de IA en Producción ($1,500)",
+      },
       { value: "Fractional Tech Lead", label: "Tech Lead Fraccional" },
       { value: "Product Sprint", label: "Sprint de Producto" },
       { value: "System Rescue", label: "Rescate de Sistema" },
@@ -895,7 +962,7 @@ const es: TerminalContent = {
     errEmail: "email inválido",
     errFreeEmail: "usa tu email de trabajo (no gmail/yahoo/etc)",
     errUrl: "ingresa una url válida",
-    errContext: "mínimo 100 caracteres — ¿cuál es el problema?",
+    errContext: "mínimo 150 caracteres — ¿cuál es el problema?",
     confirmQualifiedTitle: "[✓] postulación recibida",
     confirmQualifiedBody:
       "Gracias — eres un buen fit. Enviaré link de calendario y 2 preguntas de preparación a {email} en 24h.",
@@ -906,13 +973,13 @@ const es: TerminalContent = {
     confirmNotQualifiedBody:
       "Por lo que compartiste, probablemente no soy la mejor persona. Dos cosas que pueden ayudar:",
     notQualifiedLinkCases: "→ lee los casos de estudio",
-    notQualifiedLinkAudit: "→ empieza con una Auditoría de Velocidad ($1,500)",
+    notQualifiedLinkAudit: "→ ver la Auditoría de IA en Producción ($1,500)",
   },
   fitCheck: {
     prompt: "$ cat ./fit-check.txt",
     forHeading: "# Esto es para ti si:",
     forItems: [
-      "Eres CTO, founder o VP de Ingeniería en un SaaS o startup AI en etapa Seed–Series B",
+      "Eres CTO, founder o VP de Ingeniería en una empresa de software B2B establecida",
       "Tu equipo tiene 5–25 ingenieros y están chocando con muros de velocidad",
       "Has entregado productos y reconoces buena ingeniería cuando la ves",
       "Tienes presupuesto aprobado para ingeniería fraccional / contratista ($8k+/mes)",

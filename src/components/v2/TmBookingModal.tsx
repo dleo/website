@@ -1,16 +1,12 @@
 import { useEffect } from "react";
 import type { Lang, TerminalContent } from "~/data/v2/types";
-import { CALENDLY_URL } from "~/data/v2/content";
+import { CalendlyInline } from "./CalendlyInline";
 
 type Props = {
   t: TerminalContent;
   lang: Lang;
   onClose: () => void;
 };
-
-const CALENDLY_SCRIPT_ID = "calendly-widget-script";
-const CALENDLY_SCRIPT_SRC =
-  "https://assets.calendly.com/assets/external/widget.js";
 
 export const TmBookingModal = ({ t, lang, onClose }: Props) => {
   useEffect(() => {
@@ -20,28 +16,11 @@ export const TmBookingModal = ({ t, lang, onClose }: Props) => {
     };
     window.addEventListener("keydown", onKey);
 
-    if (!document.getElementById(CALENDLY_SCRIPT_ID)) {
-      const script = document.createElement("script");
-      script.id = CALENDLY_SCRIPT_ID;
-      script.src = CALENDLY_SCRIPT_SRC;
-      script.async = true;
-      document.head.appendChild(script);
-    }
-
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
   }, [onClose]);
-
-  const params = new URLSearchParams({
-    hide_gdpr_banner: "1",
-    primary_color: "6bf098",
-    text_color: "e8efe8",
-    background_color: "0a0e0c",
-  });
-  if (lang === "es") params.set("locale", "es");
-  const dataUrl = `${CALENDLY_URL}?${params.toString()}`;
 
   return (
     <div className="tm-modal-bg" onClick={onClose}>
@@ -65,10 +44,7 @@ export const TmBookingModal = ({ t, lang, onClose }: Props) => {
         <div className="tm-modal-body tm-booking-body">
           <div className="tm-tcm-meta">{t.booking.meta}</div>
           <h3 className="tm-tcm-title">{t.booking.embedHeading}</h3>
-          <div
-            className="calendly-inline-widget tm-calendly"
-            data-url={dataUrl}
-          />
+          <CalendlyInline primaryColor="6bf098" lang={lang} />
         </div>
       </div>
     </div>

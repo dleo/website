@@ -1,45 +1,64 @@
 ---
-import PageLayout from '~/layouts/PageLayout.astro';
-import TerminalSite from '~/components/v2/TerminalSite';
-import { findLatestPosts } from '~/utils/blog';
-import { getPermalink } from '~/utils/permalinks';
-import { getFormattedDate } from '~/utils/utils';
-import type { ArticleItem } from '~/data/v2/types';
+import PageLayout from "~/layouts/PageLayout.astro";
+import TerminalSite from "~/components/v2/TerminalSite";
+import { findLatestPosts } from "~/utils/blog";
+import { getPermalink } from "~/utils/permalinks";
+import { getFormattedDate } from "~/utils/utils";
+import type { ArticleItem } from "~/data/v2/types";
 
 const metadata = {
-  title: 'David Lopez — Fractional Tech Lead & Product Engineer',
+  title: "David Lopez — Fractional AI Product Engineer for B2B Software",
   ignoreTitleTemplate: true,
   description:
-    'Fractional tech lead and product engineer for CTOs who need someone senior to architect, ship, and lead — without the full-time hire. 15+ years. LATAM-based.',
+    "Fractional AI product engineer for B2B software teams who need AI in their product without hiring a team to get there. 17 years. LATAM-based.",
 };
 
-const latestPosts: ArticleItem[] = (await findLatestPosts({ count: 4 })).map((post) => ({
-  title: post.title,
-  cat: post.category?.title ?? '',
-  date: getFormattedDate(post.publishDate),
-  read: post.readingTime ? `${post.readingTime} min read` : '',
-  href: getPermalink(post.permalink, 'post'),
-}));
+const latestPosts: ArticleItem[] = (await findLatestPosts({ count: 4 })).map(
+  (post) => ({
+    title: post.title,
+    cat: post.category?.title ?? "",
+    date: getFormattedDate(post.publishDate),
+    read: post.readingTime ? `${post.readingTime} min read` : "",
+    href: getPermalink(post.permalink, "post"),
+  }),
+);
 
 const deployEpoch = Date.now();
 ---
 
 <PageLayout metadata={metadata} showHeader={false} showFooter={false}>
-  <TerminalSite client:load latestPosts={latestPosts} deployEpoch={deployEpoch} />
+  <TerminalSite
+    client:load
+    latestPosts={latestPosts}
+    deployEpoch={deployEpoch}
+  />
 
   <!-- Netlify form registrations (hidden). Modal JS submits via fetch to '/'. -->
-  <form name="contact-v2" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+  <form
+    name="contact-v2"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+    hidden
+  >
     <input type="text" name="name" />
     <input type="email" name="email" />
     <textarea name="message"></textarea>
     <input type="text" name="lang" />
   </form>
-  <form name="apply-v2" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+  <form
+    name="apply-v2"
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
+    hidden
+  >
     <input type="text" name="name" />
     <input type="email" name="email" />
     <input type="text" name="companyUrl" />
     <input type="text" name="role" />
-    <input type="text" name="stage" />
+    <input type="text" name="companyType" />
+    <input type="text" name="arr" />
+    <input type="text" name="aiStatus" />
+    <input type="text" name="timeline" />
     <input type="text" name="need" />
     <textarea name="context"></textarea>
     <input type="text" name="qualification" />

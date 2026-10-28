@@ -15,6 +15,18 @@
   status = 301
   force = false
 
+[[redirects]]
+  from = "/ai-audit"
+  to = "/audit"
+  status = 301
+  force = false
+
+[[redirects]]
+  from = "/velocity-audit"
+  to = "/audit"
+  status = 301
+  force = false
+
 [[headers]]
   for = "/_astro/*"
   [headers.values]

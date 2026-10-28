@@ -21,12 +21,32 @@ type Props = {
 };
 
 const MONTHS_EN = [
-  "jan", "feb", "mar", "apr", "may", "jun",
-  "jul", "aug", "sep", "oct", "nov", "dec",
+  "jan",
+  "feb",
+  "mar",
+  "apr",
+  "may",
+  "jun",
+  "jul",
+  "aug",
+  "sep",
+  "oct",
+  "nov",
+  "dec",
 ];
 const MONTHS_ES = [
-  "ene", "feb", "mar", "abr", "may", "jun",
-  "jul", "ago", "sep", "oct", "nov", "dic",
+  "ene",
+  "feb",
+  "mar",
+  "abr",
+  "may",
+  "jun",
+  "jul",
+  "ago",
+  "sep",
+  "oct",
+  "nov",
+  "dic",
 ];
 
 const pad2 = (n: number) => String(n).padStart(2, "0");
@@ -52,7 +72,7 @@ const TerminalSite = ({ latestPosts, deployEpoch }: Props = {}) => {
   const closeApply = () => setApplyOpen({ open: false });
 
   const SERVICE_TO_NEED: Record<string, string> = {
-    audit: "Velocity Audit",
+    audit: "AI Production Audit",
     fractional: "Fractional Tech Lead",
     sprint: "Product Sprint",
     rescue: "System Rescue",
@@ -407,6 +427,11 @@ const TerminalSite = ({ latestPosts, deployEpoch }: Props = {}) => {
               >
                 {t.serviceStart} --{s.id} →
               </button>
+              {s.link && (
+                <a href={s.link} className="tm-service-link">
+                  cat ./{s.id}.md →
+                </a>
+              )}
             </div>
           ))}
         </div>
@@ -656,7 +681,7 @@ const TerminalSite = ({ latestPosts, deployEpoch }: Props = {}) => {
               >
                 github.com/dleo ↗
               </a>
-                            <a
+              <a
                 href="https://www.upwork.com/freelancers/davidlopezd"
                 target="_blank"
                 rel="noreferrer"

@@ -76,6 +76,7 @@ export interface ServiceItem {
   subtitle: string;
   price: string;
   bullets: string[];
+  link?: string;
 }
 
 export interface CaseLabels {
@@ -177,12 +178,18 @@ export interface ApplyModalLabels {
   labelEmail: string;
   labelCompanyUrl: string;
   labelRole: string;
-  labelStage: string;
+  labelCompanyType: string;
+  labelArr: string;
+  labelAiStatus: string;
+  labelTimeline: string;
   labelNeed: string;
   labelContext: string;
   contextHint: string;
   roleOptions: { value: string; label: string }[];
-  stageOptions: { value: string; label: string }[];
+  companyTypeOptions: { value: string; label: string }[];
+  arrOptions: { value: string; label: string }[];
+  aiStatusOptions: { value: string; label: string }[];
+  timelineOptions: { value: string; label: string }[];
   needOptions: { value: string; label: string }[];
   send: string;
   done: string;
